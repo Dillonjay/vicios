@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Link } from "react-scroll";
 import AboutSection from "./About";
+import FallingText from "./FallingText";
 
 const Home = () => {
   const { scrollYProgress } = useScroll();
@@ -116,31 +117,39 @@ const Home = () => {
       </nav>
 
       <div className="relative h-[250vh] w-full bg-black">
-        {/* Landing Section with Sliding Panel */}
-        <div className="sticky top-0 h-screen w-full bg-center bg-cover flex justify-center bg-[url('./assets/vicios-hero.jpeg')]">
+        {/* Landing Section */}
+        <motion.div className="sticky top-0 h-screen w-full bg-center bg-cover flex justify-center bg-[url('./assets/vicios-hero.jpeg')] relative">
+          {/* Glow Overlay */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-full glow-overlay"
+            style={{
+              opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]), // Optional fade-out on scroll
+            }}
+          ></motion.div>
+
           {/* Background Overlay */}
           <motion.div
-            className="absolute top-0 left-0 w-full h-full bg-black"
+            className="absolute top-0 left-0 w-full h-full bg-black z-20"
             style={{ opacity: darkOverlayOpacity }}
           />
 
           {/* Sliding Black Panel */}
           <motion.div
-            className="absolute top-0 h-full flex flex-col justify-center items-center bg-black"
+            className="absolute top-0 h-full flex flex-col justify-center items-center bg-black z-30"
             style={{
-              width: panelWidth, // Sliding animation tied to panelWidth
+              width: panelWidth,
               boxShadow: "inset 0px 0px 30px rgba(0, 0, 0, 0.7)",
               background: `
-              linear-gradient(
-                rgba(0, 0, 0, 1) 0%,
-                rgba(20, 20, 20, 1) 50%,
-                rgba(0, 0, 0, 1) 100%
-              ),
-              radial-gradient(
-                circle,
-                rgba(30,30, 30, 1) 0%,
-                rgba(0, 0, 0, 1) 80%
-              )`,
+        linear-gradient(
+          rgba(0, 0, 0, 1) 0%,
+          rgba(20, 20, 20, 1) 50%,
+          rgba(0, 0, 0, 1) 100%
+        ),
+        radial-gradient(
+          circle,
+          rgba(30,30, 30, 1) 0%,
+          rgba(0, 0, 0, 1) 80%
+        )`,
             }}
           >
             {/* Album Cover */}
@@ -151,7 +160,6 @@ const Home = () => {
                 scale: underneathScale, // Album cover zoom-in
                 width: "30vh",
                 height: "30vh",
-
                 boxShadow: "0 0 40px -3px rgba(300, 300, 300, 0.7)",
               }}
             />
@@ -208,7 +216,7 @@ const Home = () => {
               </button>
             </motion.div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
 
       {/* About Section */}
@@ -238,6 +246,8 @@ const Home = () => {
           )`,
         }}
       >
+        {/* Use the FallingText Component */}
+        <FallingText text="Projects" scrollYProgress={scrollYProgress} />
         <h2 className="text-xl text-white">
           Have PROJECT or something FALL In. It also might be cool to associate
           the back of the art cover for the projects section maybe?

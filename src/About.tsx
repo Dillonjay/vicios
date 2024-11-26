@@ -162,19 +162,20 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                       // Fade out the text as we slide out the little black box thing.
                       opacity: useTransform(
                         scrollYProgress,
-                        [0.65, 0.73],
+                        [0.62, 0.73],
                         [1, 0]
                       ),
                     }}
                   >
                     <h2 className="text-xl font-bold">About Us</h2>
                     <p className="text-sm mt-2">
-                      Discover more about our journey, values, and the stories
-                      that shape who we are.
+                      Blah Blah Blah Blah fucking Blah blah blah Fucking blah.
+                      Blah blah blfucking balwwwwh
                     </p>
                     <p className="text-sm mt-2">
-                      Discover more about our journey, values, and the stories
-                      that shape who we are.
+                      Blah Blah Blah Blah fucking Blah blah blah Fucking blah.
+                      Blah blah blfucking balwwwwh. Y ma balch pinche balh balch
+                      puto.
                     </p>
                   </motion.div>
                 </motion.div>
