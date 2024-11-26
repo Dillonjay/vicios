@@ -15,7 +15,7 @@ interface AboutSectionProps {
 
 const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
   ({ opacity, translateY, scrollYProgress, textOpacity }, ref) => {
-    // Animations for each image
+    // Image animations
     const slideInFromLeft = useTransform(
       scrollYProgress,
       [0.15, 0.35],
@@ -38,6 +38,24 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
     );
     const fadeIn = useTransform(scrollYProgress, [0.29, 0.52], [0, 1]); // Fade in
 
+    // Panel animation
+    const panelTranslateY = useTransform(
+      scrollYProgress,
+      [0.4, 0.55],
+      [100, 0]
+    );
+    const panelOpacity = useTransform(scrollYProgress, [0.4, 0.55], [0, 1]);
+
+    // Dim other images while the text panel appears
+    const fadeOtherImages = useTransform(
+      scrollYProgress,
+      [0.4, 0.55],
+      [1, 0.2]
+    );
+
+    // Spotlight effect for the entire page
+    const spotlightOpacity = useTransform(scrollYProgress, [0.4, 0.55], [0, 1]);
+
     return (
       <div className="relative h-[200vh] w-full">
         <div className="sticky top-0 h-screen w-full">
@@ -53,91 +71,79 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
               `,
             }}
           >
+            {/* Full-Screen Spotlight Effect */}
+            <motion.div
+              className="absolute inset-0 z-10"
+              style={{
+                opacity: spotlightOpacity,
+                background:
+                  "radial-gradient(circle, rgba(255,255,255,0.6) 15%, rgba(0,0,0,0.9) 70%)",
+                pointerEvents: "none",
+              }}
+            />
+
             {/* Image Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 relative z-20">
               <motion.div
                 className="relative overflow-hidden rounded-lg shadow-lg row-span-2"
                 style={{
                   x: slideInFromLeft,
-                  opacity: fadeIn,
+                  opacity: fadeOtherImages,
                 }}
               >
                 <img src={vicios5} className="w-full h-full object-cover" />
-                <motion.div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-white font-bold">Fun Fact about</p>
-                </motion.div>
               </motion.div>
               <motion.div
                 className="relative overflow-hidden rounded-lg shadow-lg"
                 style={{
                   y: slideInFromTop,
-                  opacity: 1,
+                  opacity: fadeOtherImages,
                 }}
               >
                 <img
                   src={vicios4}
                   className="w-full h-full object-cover aspect-square"
-                  style={{
-                    maxHeight: "500px",
-                  }}
                 />
-                <motion.div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-white font-bold">Fun Fact about</p>
-                </motion.div>
               </motion.div>
               <motion.div
                 className="relative overflow-hidden rounded-lg shadow-lg"
                 style={{
                   x: slideInFromRight,
-                  opacity: fadeIn,
+                  opacity: fadeOtherImages,
                 }}
               >
                 <img
                   src={vicios3}
                   className="w-full h-full object-cover aspect-square"
-                  style={{
-                    maxHeight: "500px",
-                  }}
                 />
-                <motion.div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-white font-bold">Fun Fact about</p>
-                </motion.div>
               </motion.div>
               <motion.div
                 className="relative overflow-hidden rounded-lg shadow-lg col-span-2"
                 style={{
                   y: slideInFromBottom,
-                  opacity: 1,
+                  opacity: fadeIn,
                 }}
               >
                 <img
                   src={vicios1}
                   className="w-full h-full object-cover aspect-[16/9]"
-                  style={{
-                    maxHeight: "500px",
-                  }}
                 />
-                <motion.div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-white font-bold">Fun Fact about</p>
+                {/* Sliding Panel */}
+                <motion.div
+                  className="absolute bottom-0 left-0 w-full bg-black bg-opacity-90 text-white p-6 rounded-t-lg shadow-lg"
+                  style={{
+                    translateY: panelTranslateY,
+                    opacity: panelOpacity,
+                  }}
+                >
+                  <h2 className="text-xl font-bold">About Us</h2>
+                  <p className="text-sm mt-2">
+                    Discover more about our journey, values, and the stories
+                    that shape who we are.
+                  </p>
                 </motion.div>
               </motion.div>
             </div>
-
-            {/* Bio Section */}
-            <motion.div
-              className="mt-16 text-center"
-              style={{
-                opacity: textOpacity,
-                translateY: translateY,
-              }}
-            >
-              <h2 className="text-4xl font-bold text-white">Our Story</h2>
-              <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
-                This is where you can add a compelling bio or description about
-                your project, team, or story. Engage the user with meaningful
-                text that complements the interactive visuals.
-              </p>
-            </motion.div>
           </motion.div>
         </div>
       </div>
