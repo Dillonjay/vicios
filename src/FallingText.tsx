@@ -1,39 +1,37 @@
-import React from "react";
 import { motion, useTransform, MotionValue } from "framer-motion";
 
-const FallingText = ({
-  text,
-  scrollYProgress,
-}: {
-  text: string;
+interface LetterProps {
+  letter: string;
   scrollYProgress: MotionValue<number>;
-}) => {
-  const letters = text.split("");
+  stagger: number;
+}
 
-  // Define a single range for all letters
-  const yOffsets = letters.map((_, index) => -50 + index * 10); // Slightly staggered drop
-  const opacities = letters.map((_, index) => 0.2 + index * 0.05); // Slightly staggered fade-in
+const Letter = ({ letter, scrollYProgress, stagger }: LetterProps) => {
+  // Y position based on scroll and stagger
+  const letterY = useTransform(
+    scrollYProgress,
+    [0.62 + stagger * 0.05, 0.74 + stagger * 0.05], // Delay each letter
+    [-100, 0]
+  );
 
-  // A single hook for managing animation ranges
-  const y = useTransform(scrollYProgress, [0.2, 0.5], [-50, 0]);
-  const opacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 1]);
+  // Opacity based on scroll and stagger
+  const opacity = useTransform(
+    scrollYProgress,
+    [0.62 + stagger * 0.05, 0.74 + stagger * 0.05],
+    [0, 1]
+  );
 
   return (
-    <div className="flex justify-center">
-      {letters.map((letter, index) => (
-        <motion.span
-          key={index}
-          className="inline-block text-4xl font-bold text-white"
-          style={{
-            y: `calc(${y.get()}px + ${yOffsets[index]}px)`, // Adds an offset per letter
-            opacity: opacity.get() * (opacities[index] || 1), // Adjusts fade per letter
-          }}
-        >
-          {letter === " " ? "\u00A0" : letter}
-        </motion.span>
-      ))}
-    </div>
+    <motion.span
+      style={{
+        translateY: letterY,
+        opacity, // Fades in as it falls
+      }}
+      className="inline-block mx-2" // Add spacing between letters
+    >
+      {letter === " " ? "\u00A0" : letter} {/* Preserve spaces */}
+    </motion.span>
   );
 };
 
-export default FallingText;
+export default Letter;

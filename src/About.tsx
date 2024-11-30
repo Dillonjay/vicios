@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import { motion, MotionValue, useTransform } from "framer-motion";
 
 import vicios1 from "./assets/vicios-1.jpeg";
@@ -7,59 +7,82 @@ import vicios4 from "./assets/vicios-4.jpeg";
 import vicios5 from "./assets/vicios-5.jpeg";
 
 interface AboutSectionProps {
-  opacity: MotionValue<number>;
-  textOpacity: MotionValue<number>;
-  translateY: MotionValue<number>;
   scrollYProgress: MotionValue<number>;
 }
 
 const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
-  ({ opacity, translateY, scrollYProgress, textOpacity }, ref) => {
+  ({ scrollYProgress }, ref) => {
+    // Maybe this is just an overlay.
+    const opacity = useTransform(scrollYProgress, [0.44, 0.53], [0, 1]);
+
     // Image animations
     const slideInFromLeft = useTransform(
       scrollYProgress,
-      [0.15, 0.4],
+      [0.4, 0.56], // These stay the same
       [-800, 0]
     );
     const slideInFromRight = useTransform(
       scrollYProgress,
-      [0.15, 0.4],
+      [0.4, 0.56], // These stay the same
       [800, 0]
     );
     const slideInFromTop = useTransform(
       scrollYProgress,
-      [0.25, 0.5],
+      [0.45, 0.57], // These also stay the same.
       [-200, 0]
     );
     const slideInFromBottom = useTransform(
       scrollYProgress,
-      [0.25, 0.5],
+      [0.45, 0.57], // These also stay the same.
       [200, 0]
     );
+
     const fadeIn = useTransform(scrollYProgress, [0.29, 0.52], [0, 1]);
 
     // Spotlight/dimming effect
     const fadeOtherImages = useTransform(
       scrollYProgress,
-      [0.5, 0.58],
+      [0.58, 0.69],
       [1, 0.1]
     );
 
     // Box-shadow for spotlight effect
     const boxShadowIntensity = useTransform(
       scrollYProgress,
-      [0.5, 0.6],
+      [0.57, 0.69],
       [
         "0px 0px 0px 0px rgba(0,0,0,0)",
         "0px 0px 90px 10px rgba(255,255,255,0.8)",
       ]
     );
 
-    const scaleImage = useTransform(scrollYProgress, [0.58, 0.63], [1, 1.3]);
+    const scaleImage = useTransform(scrollYProgress, [0.58, 0.71], [1, 1.3]);
     const slideImageSlightly = useTransform(
       scrollYProgress,
-      [0.5, 0.58],
+      [0.58, 0.71],
       [0, -150]
+    );
+
+    const slidingPanelOpacity = useTransform(
+      scrollYProgress,
+      [0.55, 0.7],
+      [0, 0.9]
+    );
+    const slidingPanelTranslateY = useTransform(
+      scrollYProgress,
+      [0.55, 0.7],
+      [150, 0]
+    );
+    const slidingPanelTranslateX = useTransform(
+      scrollYProgress,
+      [0.73, 0.84],
+      [0, 750]
+    );
+
+    const slidingPanelExitTextOpacity = useTransform(
+      scrollYProgress,
+      [0.73, 0.84],
+      [1, 0]
     );
 
     const spotlightSize = "10%"; // Smaller size for a tighter circle
@@ -82,9 +105,9 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
             style={{
               opacity: opacity,
               backgroundImage: `
-                radial-gradient(circle at top left, #0F0F0F, #1C1C1C 40%, #0F0F0F 100%),
-                url('https://www.transparenttextures.com/patterns/asfalt-light.png')
-              `,
+              radial-gradient(circle at top left, #0A0A0A, #181818 40%, #0A0A0A 100%),
+              url('https://www.transparenttextures.com/patterns/asfalt-light.png')
+            `,
             }}
           >
             {/* Image Grid */}
@@ -99,7 +122,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                 <img src={vicios5} className="w-full h-full object-cover" />
               </motion.div>
               <motion.div
-                className="relative overflow-hidden rounded-lg shadow-lg max-h-[30em]"
+                className="relative overflow-hidden rounded-lg shadow-lg max-h-[20em]"
                 style={{
                   y: slideInFromTop,
                   opacity: fadeOtherImages,
@@ -111,7 +134,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                 />
               </motion.div>
               <motion.div
-                className="relative overflow-hidden rounded-lg shadow-lg max-h-[30em]"
+                className="relative overflow-hidden rounded-lg shadow-lg max-h-[20em]"
                 style={{
                   x: slideInFromRight,
                   opacity: fadeOtherImages,
@@ -123,7 +146,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                 />
               </motion.div>
               <motion.div
-                className="relative overflow-hidden rounded-lg shadow-lg col-span-2 max-h-[30em]"
+                className="relative overflow-hidden rounded-lg shadow-lg col-span-2 max-h-[20em]"
                 style={{
                   y: slideInFromBottom,
                   opacity: fadeIn,
@@ -138,41 +161,26 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                 />
                 {/* Sliding Panel */}
                 <motion.div
-                  className="absolute bottom-0 left-0 w-full bg-black bg-opacity-90 text-white p-6 rounded-t-lg shadow-lg"
+                  className="absolute bottom-0 left-0 w-full bg-opacity-90 text-white p-6 rounded-t-lg shadow-lg"
                   style={{
-                    translateY: useTransform(
-                      scrollYProgress,
-                      [0.58, 0.63],
-                      [150, 0]
-                    ),
-                    translateX: useTransform(
-                      scrollYProgress,
-                      [0.66, 0.77],
-                      [0, 750]
-                    ),
-                    opacity: useTransform(
-                      scrollYProgress,
-                      [0.58, 0.63],
-                      [0, 1]
-                    ),
+                    background: "#0F0F0F",
+                    translateY: slidingPanelTranslateY,
+                    translateX: slidingPanelTranslateX,
+                    opacity: slidingPanelOpacity,
                   }}
                 >
                   <motion.div
                     style={{
                       // Fade out the text as we slide out the little black box thing.
-                      opacity: useTransform(
-                        scrollYProgress,
-                        [0.62, 0.73],
-                        [1, 0]
-                      ),
+                      opacity: slidingPanelExitTextOpacity,
                     }}
                   >
                     <h2 className="text-xl font-bold">About Us</h2>
-                    <p className="text-sm mt-2">
+                    <p className="text-sm mt-2 font-light">
                       Blah Blah Blah Blah fucking Blah blah blah Fucking blah.
                       Blah blah blfucking balwwwwh
                     </p>
-                    <p className="text-sm mt-2">
+                    <p className="text-sm mt-2 font-light">
                       Blah Blah Blah Blah fucking Blah blah blah Fucking blah.
                       Blah blah blfucking balwwwwh. Y ma balch pinche balh balch
                       puto.

@@ -1,0 +1,9 @@
+.mask {
+  mask-image: url("./assets/circle-mask.svg");
+  mask-repeat: no-repeat;
+  mask-size: 40px;
+  background: white;
+  /* position: absolute; */
+  color: black;
+  cursor: default;
+}

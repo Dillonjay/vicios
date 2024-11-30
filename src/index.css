@@ -1,6 +1,8 @@
+@import "./mask.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 /* Glow Animation */
 @keyframes gradientGlow {
   0% {
@@ -28,4 +30,32 @@
   animation: gradientGlow 8s ease infinite; /* Smooth glow effect */
   filter: blur(50px); /* Soft glow */
   pointer-events: none; /* Prevent interactions */
+}
+
+@font-face {
+  font-family: "Aileron";
+  src: url("./assets/fonts/Aileron-Light.otf") format("opentype");
+  font-weight: 300; /* Light */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Aileron";
+  src: url("./assets/fonts/Aileron-Regular.otf") format("opentype");
+  font-weight: 400; /* Regular */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Aileron";
+  src: url("./assets/fonts/Aileron-Bold.otf") format("opentype");
+  font-weight: 700; /* Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Aileron";
+  src: url("./assets/fonts/Aileron-Black.otf") format("opentype");
+  font-weight: 900; /* Black */
+  font-style: normal;
 }
