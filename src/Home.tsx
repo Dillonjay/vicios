@@ -5,20 +5,32 @@ import AboutSection from "./About";
 import ProjectSection from "./Project";
 import ContactSection from "./Contact";
 
-import {
-  FaFacebook,
-  FaInstagram,
-  FaMailchimp,
-  FaYoutube,
-} from "react-icons/fa6";
-import { FaMailBulk } from "react-icons/fa";
+import { FaApple, FaYoutube, FaSpotify } from "react-icons/fa6";
+
+interface MusicButtonProps {
+  icon: any; // The icon component (e.g., FaSpotify, FaApple, etc.)
+  href: string; // The URL to link to
+}
+
+const MusicButton: React.FC<MusicButtonProps> = ({ icon: Icon, href }) => {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex items-center justify-center p-4 rounded-full bg-transparent text-white transition duration-300 ease-in-out 
+        hover:text-cyan-400"
+    >
+      <Icon className="text-3xl group-hover:scale-110 transition-transform duration-300" />
+    </a>
+  );
+};
 
 const Home = () => {
   const { scrollYProgress } = useScroll();
 
   // First ocultos dissapear opacity:
-  const ocultosOpacity = useTransform(scrollYProgress, [0, 0.06], [1, 0]);
-  const ocultosYScale = useTransform(scrollYProgress, [0, 0.05], [0, -200]);
+  const ocultosOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
   //Vicios
   const viciosTranslateY = useTransform(
     scrollYProgress,
@@ -114,7 +126,7 @@ const Home = () => {
               VICIOS
             </motion.h1>
             <motion.h2
-              className="text-7xl font-black text-white z-20"
+              className="text-7xl font-black text-white"
               style={{
                 opacity: ocultosOpacity,
               }}
@@ -161,7 +173,7 @@ const Home = () => {
             >
               {/* Album Cover */}
               <motion.div
-                className="bg-center bg-cover bg-[url('./assets/cierto-cover.jpeg')] z-40"
+                className="bg-center bg-cover bg-[url('./assets/cierto-cover.jpeg')]"
                 style={{
                   opacity: underneathOpacity, // Album cover fade-in
                   scale: underneathScale, // Album cover zoom-in
@@ -173,28 +185,20 @@ const Home = () => {
 
               {/* Supporting Text */}
               <motion.div
-                className="text-center text-white z-50 w-full"
+                className="text-center text-white"
                 style={{
                   opacity: singleTextOpacity,
                   translateY: singleTextTranslateY,
                 }}
               >
                 <h2 className="text-2xl font-bold">
-                  "Vicios Ocultos" - Lo Cierto
+                  Vicios Ocultos - Lo Cierto
                 </h2>
-                <p className="mt-4">
-                  Listen now on{" "}
-                  <a href="spotify-link" className="underline">
-                    Spotify
-                  </a>
-                </p>
-                <motion.button
-                  className="mt-8 px-10 py-4 bg-blue-500 hover:bg-blue-700 text-white text-xl font-bold rounded-lg shadow-lg"
-                  whileHover={{ scale: 1.1 }} // Hover effect
-                  whileTap={{ scale: 0.95 }} // Tap effect
-                >
-                  Play
-                </motion.button>
+                <div className="flex justify-center items-center gap-1">
+                  <MusicButton icon={FaSpotify} href="https://spotify.com" />
+                  <MusicButton icon={FaApple} href="https://spotify.com" />
+                  <MusicButton icon={FaYoutube} href="https://spotify.com" />
+                </div>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -202,89 +206,7 @@ const Home = () => {
         {/* About Section */}
         <AboutSection scrollYProgress={scrollYProgress} ref={aboutRef} />
         <ProjectSection ref={musicRef} scrollYProgress={scrollYProgress} />
-        {/* Contact Section */}
-        {/* <div
-        id="contact-section"
-        className="h-screen bg-gray-700 flex flex-col"
-        style={{
-          //     // opacity: opacity,
-          backgroundImage: `
-          linear-gradient(to top, #2B2B4F 10%, #1C1C1C 40%, #0F0F0F 100%),
-          url('https://www.transparenttextures.com/patterns/asfalt-light.png')
-      `,
-        }}
-      >
-        <motion.h1
-          className="text-9xl font-bold"
-          initial={{ color: "white" }}
-          whileInView={{ color: "#32CD32" }}
-          transition={{ duration: 0.5 }}
-        >
-          Contact
-        </motion.h1>
-      </div> */}
-        {/* <motion.div className="h-screen w-full bg-center bg-cover flex justify-center bg-[url('./assets/vicios-back-cover.png')]"></motion.div> */}
-        {/*  bg-center bg-cover bg-no-repeat bg-[url('./assets/vicios-back-cover.png')] */}
-        {/* Contact Section */}\{/* Include the ref */}
         <ContactSection scrollYProgress={scrollYProgress} />
-        {/* <motion.div
-          id="contact-section"
-          ref={contactRef}
-          className="h-screen w-full flex items-center justify-center bg-black"
-          style={{
-            opacity: useTransform(scrollYProgress, [0.95, 1], [0.1, 1]), // Gradual black overlay fade-out
-          }}
-        >
-          <div className="flex flex-col">
-            <motion.h1
-              className="text-9xl font-black text-white"
-              style={{
-                opacity: useTransform(scrollYProgress, [0.9, 1], [0, 1]), // Fade-in
-                scale: useTransform(scrollYProgress, [0.9, 1], [0.7, 1.5]), // Scale up
-                translateY: useTransform(scrollYProgress, [0.9, 1], [100, 0]), // Float in from below
-              }}
-            >
-              CONNECT
-            </motion.h1>
-            <motion.div
-              className="flex mt-9 justify-between"
-              style={{
-                opacity: useTransform(scrollYProgress, [0.9, 1], [0, 1]),
-              }}
-            >
-              <FaInstagram color="white" size="4em" />
-              <FaFacebook color="white" size="4em" />
-              <FaYoutube color="white" size="4em" />
-              <FaMailchimp color="white" size="4em" />
-            </motion.div>
-          </div> */}
-        {/* Contact Button */}
-        {/* <motion.button
-            className="mt-24 px-10 py-4 bg-blue-500 hover:bg-blue-700 text-white text-2xl font-bold rounded-lg shadow-lg"
-            style={{
-              opacity: useTransform(scrollYProgress, [0.95, 1], [0, 1]), // Fade-in
-              translateY: useTransform(scrollYProgress, [0.95, 1], [50, 0]), // Float in slightly later than the title
-            }}
-            whileHover={{ scale: 1.1 }} // Hover effect
-            whileTap={{ scale: 0.95 }} // Tap effect
-            onClick={() => (window.location.href = "/contact")} // Redirect to Contact Page
-          >
-            Contact Us
-          </motion.button>
-          <div>
-            <h2 className="text-4xl font-extrabold mb-2">Contact Us</h2>
-            <p className="text-gray-400 text-lg">
-              Prefer to email us directly? Drop us a line at:
-            </p>
-            <a
-              href="mailto:example@email.com"
-              className="block mt-2 text-blue-400 text-xl underline hover:text-blue-500"
-            >
-              example@email.com
-            </a>
-          </div> 
-                  </motion.div>
-          */}
       </div>
     </motion.div>
   );

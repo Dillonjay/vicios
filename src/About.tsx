@@ -13,17 +13,17 @@ interface AboutSectionProps {
 const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
   ({ scrollYProgress }, ref) => {
     // Maybe this is just an overlay.
-    const opacity = useTransform(scrollYProgress, [0.44, 0.53], [0, 1]);
+    const opacity = useTransform(scrollYProgress, [0.468, 0.53], [0, 1]);
 
     // Image animations
     const slideInFromLeft = useTransform(
       scrollYProgress,
-      [0.4, 0.56], // These stay the same
+      [0.4, 0.55], // These stay the same
       [-800, 0]
     );
     const slideInFromRight = useTransform(
       scrollYProgress,
-      [0.4, 0.56], // These stay the same
+      [0.4, 0.54], // These stay the same
       [800, 0]
     );
     const slideInFromTop = useTransform(
@@ -36,6 +36,12 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
       [0.45, 0.57], // These also stay the same.
       [200, 0]
     );
+
+    const scale1 = useTransform(scrollYProgress, [0.38, 0.55], [3.1, 1]);
+
+    const scale2 = useTransform(scrollYProgress, [0.38, 0.54], [3.2, 1]);
+
+    const scale3 = useTransform(scrollYProgress, [0.38, 0.53], [3, 1]);
 
     const fadeIn = useTransform(scrollYProgress, [0.29, 0.52], [0, 1]);
 
@@ -52,7 +58,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
       [0.57, 0.69],
       [
         "0px 0px 0px 0px rgba(0,0,0,0)",
-        "0px 0px 90px 10px rgba(255,255,255,0.8)",
+        "0px 0px 20px 8px rgba(255,255,255,0.6)",
       ]
     );
 
@@ -96,8 +102,8 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
     console.log("scrollYProgress", scrollYProgress.get());
     console.log("HELLO!!!!");
     return (
-      <div className="relative h-[220vh] w-full">
-        <div className="sticky top-0 h-screen w-full">
+      <div className="relative h-[220vh]">
+        <div className="sticky top-0 h-screen ">
           <motion.div
             id="about-section"
             ref={ref}
@@ -113,18 +119,20 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
             {/* Image Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 relative z-20">
               <motion.div
-                className="relative overflow-hidden rounded-lg shadow-lg row-span-2"
+                className="relative overflow-hidden shadow-lg row-span-2"
                 style={{
                   x: slideInFromLeft,
+                  scale: scale1,
                   opacity: fadeOtherImages,
                 }}
               >
                 <img src={vicios5} className="w-full h-full object-cover" />
               </motion.div>
               <motion.div
-                className="relative overflow-hidden rounded-lg shadow-lg max-h-[20em]"
+                className="relative overflow-hidden shadow-lg max-h-[20em]"
                 style={{
                   y: slideInFromTop,
+                  scale: scale3,
                   opacity: fadeOtherImages,
                 }}
               >
@@ -134,10 +142,11 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                 />
               </motion.div>
               <motion.div
-                className="relative overflow-hidden rounded-lg shadow-lg max-h-[20em]"
+                className="relative overflow-hidden shadow-lg max-h-[20em]"
                 style={{
                   x: slideInFromRight,
                   opacity: fadeOtherImages,
+                  scale: scale2,
                 }}
               >
                 <img
@@ -146,7 +155,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                 />
               </motion.div>
               <motion.div
-                className="relative overflow-hidden rounded-lg shadow-lg col-span-2 max-h-[20em]"
+                className="relative overflow-hidden  shadow-lg col-span-2 max-h-[20em]"
                 style={{
                   y: slideInFromBottom,
                   opacity: fadeIn,

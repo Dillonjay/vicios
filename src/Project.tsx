@@ -1,18 +1,32 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { motion, useTransform, MotionValue } from "framer-motion";
+import viciosCierto from "./assets/cierto-cover.jpeg";
+import viciosBack from "./assets/vicios-back-cover.png";
+import viciosOndos from "./assets/vicios-1.jpeg";
+import MusicButton from "./MusicButton";
+import { ImSpinner3 } from "react-icons/im";
+import { FaApple, FaSpotify, FaYoutube } from "react-icons/fa6";
+import LyricsAnimator from "./Lyrics";
 
 interface FallingTextProps {
   phrase: string;
   index: number;
   scrollYProgress: MotionValue<number>;
+  start: number;
+  end: number;
 }
 
-const FallingText = ({ phrase, index, scrollYProgress }: FallingTextProps) => {
-  // Define staggered animation ranges based on index
-  const staggerStart = 0.73 + index * 0.02; // Start later for each line
-  const staggerEnd = 0.78 + index * 0.02;
+const FallingText = ({
+  phrase,
+  index,
+  scrollYProgress,
+  start,
+  end,
+}: FallingTextProps) => {
+  // Falling text animations
+  const staggerStart = start + index * 0.02;
+  const staggerEnd = end + index * 0.02;
 
-  // Calculate transforms for opacity and position
   const opacity = useTransform(
     scrollYProgress,
     [staggerStart, staggerEnd],
@@ -47,68 +61,143 @@ interface ProjectSectionProps {
   scrollYProgress: MotionValue<number>;
 }
 
+const ciertoLetras = [
+  "For stories to be told",
+  "Let the memories unfold",
+  "Lo cierto no se va",
+  "Lo cierto al final",
+];
+
+const letras = `
+Lo cierto al final
+Lo cierto no se va
+Let the memories unfold
+For stories to be told
+`;
 const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
   ({ scrollYProgress }, ref) => {
-    // Falling Text Animation Data
+    const [hoveredImage, setHoveredImage] = useState<string | null>(null);
+
     const phrases = ["The night isn't over", "Until I'm", "Far from", "Sober"];
 
     return (
       <div
         id="music-section"
         ref={ref}
-        className="h-screen bg-black flex flex-col gap-10"
+        className="h-screen bg-black px-32 relative overflow-hidden"
         style={{
           background: `
-  linear-gradient(
-    rgba(0, 0, 0, 1) 0%,
-    rgba(20, 20, 20, 1) 50%,
-    rgba(0, 0, 0, 1) 100%
-  ),
-  radial-gradient(
-    circle,
-    rgba(30,30, 30, 1) 0%,
-    rgba(0, 0, 0, 1) 80%
-  )`,
+            linear-gradient(
+              rgba(0, 0, 0, 1) 0%,
+              rgba(20, 20, 20, 1) 50%,
+              rgba(0, 0, 0, 1) 100%
+            ),
+            radial-gradient(
+              circle,
+              rgba(30,30, 30, 1) 0%,
+              rgba(0, 0, 0, 1) 80%
+            )`,
         }}
       >
-        <div className="w-full flex flex-col px-48">
-          {phrases.map((phrase, index) => (
-            <FallingText
-              phrase={phrase}
-              index={index}
-              scrollYProgress={scrollYProgress}
-            />
+        <motion.div className="absolute left-0 bottom-48 whitespace-nowrap px-32 ">
+          <LyricsAnimator lyrics={letras} />
+        </motion.div>
+        {/* <motion.div
+          className="absolute left-0 bottom-32 whitespace-nowrap flex gap-80"
+          animate={{ x: [-2000, 0] }} // Adjust values as needed
+          transition={{
+            duration: 20, // Adjust duration for scroll speed
+            ease: "linear",
+            repeat: Infinity,
+          }}
+        >
+          {ciertoLetras.map((phrase, index) => (
+            <h1 key={index} className="text-white text-8xl font-black">
+              {phrase}
+            </h1>
           ))}
-        </div>
-        {/* Animated Falling Text controlled by scrollYProgress */}
-        <motion.h2>The Project</motion.h2>
-        <motion.div
-          className="w-2/3 text-center border border-gray-700 p-6 text-white flex"
-          initial={{ y: 100, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-        >
-          <motion.div
-            className="bg-center bg-cover bg-[url('./assets/cierto-cover.jpeg')] z-40"
-            style={{
-              width: "300px",
-              height: "300px",
-              boxShadow: "0 0 40px -3px rgba(300, 300, 300, 0.7)",
-            }}
-          />
-          <h3 className="text-2xl font-bold">Band Member 1</h3>
-          <p>Placeholder for band member description or image.</p>
-        </motion.div>
+        </motion.div> */}
+        {/* Falling Text and Image Row */}
+        <div className="flex justify-between pt-24">
+          <div className="flex flex-col">
+            {phrases.map((phrase, index) => (
+              <FallingText
+                key={index}
+                phrase={phrase}
+                index={index}
+                scrollYProgress={scrollYProgress}
+                start={0.75}
+                end={0.78}
+              />
+            ))}
+          </div>
 
-        <motion.div
-          className="w-2/3 text-center border border-gray-700 p-6 text-white"
-          initial={{ y: 100, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.4 }}
-        >
-          <h3 className="text-2xl font-bold">Band Member 2</h3>
-          <p>Placeholder for band member description or image.</p>
-        </motion.div>
+          <div className="relative w-80 h-80">
+            {/* Default Image */}
+            <motion.img
+              src={viciosBack}
+              alt="Default"
+              className="absolute w-full h-full object-cover"
+              animate={{ opacity: hoveredImage === null ? 1 : 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+            />
+            {/* Lo Cierto Image */}
+            <motion.img
+              src={viciosCierto}
+              alt="Cierto Cover"
+              className="absolute w-full h-full object-cover"
+              animate={{ opacity: hoveredImage === viciosCierto ? 1 : 0 }}
+              initial={{ opacity: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+            />
+            {/* Ondos Image */}
+            <motion.img
+              src={viciosOndos}
+              alt="Ondos Cover"
+              className="absolute w-full h-full object-cover"
+              animate={{ opacity: hoveredImage === viciosOndos ? 1 : 0 }}
+              initial={{ opacity: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+            />
+          </div>
+        </div>
+
+        {/* Horizontal Lines */}
+        <div className="mt-24">
+          {/* Lo Cierto */}
+          <div
+            className="border-b border-white py-4 cursor-pointer flex justify-between"
+            onMouseEnter={() => setHoveredImage(viciosCierto)}
+            onMouseLeave={() => setHoveredImage(null)} // Reset to default
+          >
+            <h3 className="text-4xl text-white font-bold">Lo Cierto</h3>
+            <div className="flex gap-0">
+              <MusicButton icon={FaSpotify} href="https://spotify.com" />
+              <MusicButton icon={FaYoutube} href="https://spotify.com" />
+              <MusicButton icon={FaApple} href="https://spotify.com" />
+            </div>
+          </div>
+
+          {/* Ondos */}
+          <div
+            className="border-b border-white py-4 cursor-pointer flex justify-between"
+            onMouseEnter={() => setHoveredImage(viciosOndos)}
+            onMouseLeave={() => setHoveredImage(null)} // Reset to default
+          >
+            <div className="flex items-center gap-3">
+              <h3 className="text-4xl text-white font-bold">Coming Soon</h3>
+              <ImSpinner3
+                className="text-white text-4xl animate-spin"
+                style={{ animationDuration: "2s" }}
+              />
+            </div>
+            <div className="flex gap-0">
+              <MusicButton icon={FaSpotify} href="https://spotify.com" />
+              <MusicButton icon={FaYoutube} href="https://spotify.com" />
+              <MusicButton icon={FaApple} href="https://spotify.com" />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
