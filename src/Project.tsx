@@ -1,5 +1,10 @@
 import { forwardRef, useState } from "react";
-import { motion, useTransform, MotionValue } from "framer-motion";
+import {
+  motion,
+  useTransform,
+  MotionValue,
+  AnimatePresence,
+} from "framer-motion";
 import viciosCierto from "./assets/cierto-cover.jpeg";
 import viciosBack from "./assets/vicios-back-cover.png";
 import viciosOndos from "./assets/vicios-1.jpeg";
@@ -68,12 +73,12 @@ const ciertoLetras = [
   "Lo cierto al final",
 ];
 
-const letras = `
-Lo cierto al final
-Lo cierto no se va
-Let the memories unfold
-For stories to be told
-`;
+const letras = [
+  "Lo cierto al final",
+  "Lo cierto no se va",
+  "Let the memories unfold",
+  "For stories to be told",
+];
 const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
   ({ scrollYProgress }, ref) => {
     const [hoveredImage, setHoveredImage] = useState<string | null>(null);
@@ -82,9 +87,9 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
 
     return (
       <div
-        id="music-section"
+        id="project-section"
         ref={ref}
-        className="h-screen bg-black px-32 relative overflow-hidden"
+        className="h-[100vh] bg-black px-32 relative"
         style={{
           background: `
             linear-gradient(
@@ -99,24 +104,6 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
             )`,
         }}
       >
-        <motion.div className="absolute left-0 bottom-48 whitespace-nowrap px-32 ">
-          <LyricsAnimator lyrics={letras} />
-        </motion.div>
-        {/* <motion.div
-          className="absolute left-0 bottom-32 whitespace-nowrap flex gap-80"
-          animate={{ x: [-2000, 0] }} // Adjust values as needed
-          transition={{
-            duration: 20, // Adjust duration for scroll speed
-            ease: "linear",
-            repeat: Infinity,
-          }}
-        >
-          {ciertoLetras.map((phrase, index) => (
-            <h1 key={index} className="text-white text-8xl font-black">
-              {phrase}
-            </h1>
-          ))}
-        </motion.div> */}
         {/* Falling Text and Image Row */}
         <div className="flex justify-between pt-24">
           <div className="flex flex-col">
@@ -163,7 +150,7 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
         </div>
 
         {/* Horizontal Lines */}
-        <div className="mt-24">
+        <div className="mt-24 sticky top-0">
           {/* Lo Cierto */}
           <div
             className="border-b border-white py-4 cursor-pointer flex justify-between"
@@ -171,6 +158,7 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
             onMouseLeave={() => setHoveredImage(null)} // Reset to default
           >
             <h3 className="text-4xl text-white font-bold">Lo Cierto</h3>
+
             <div className="flex gap-0">
               <MusicButton icon={FaSpotify} href="https://spotify.com" />
               <MusicButton icon={FaYoutube} href="https://spotify.com" />
@@ -198,6 +186,19 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
             </div>
           </div>
         </div>
+
+        {hoveredImage && (
+          <motion.div
+            className="relative whitespace-nowrap px-32 mt-24"
+            animate={{ opacity: 1, display: "block" }}
+            initial={{ opacity: 0, display: "none" }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+          >
+            <LyricsAnimator
+              lyrics={hoveredImage === viciosCierto ? letras : []}
+            />
+          </motion.div>
+        )}
       </div>
     );
   }

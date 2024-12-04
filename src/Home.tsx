@@ -6,6 +6,7 @@ import ProjectSection from "./Project";
 import ContactSection from "./Contact";
 
 import { FaApple, FaYoutube, FaSpotify } from "react-icons/fa6";
+import Header from "./Header";
 
 interface MusicButtonProps {
   icon: any; // The icon component (e.g., FaSpotify, FaApple, etc.)
@@ -30,19 +31,13 @@ const Home = () => {
   const { scrollYProgress } = useScroll();
 
   // First ocultos dissapear opacity:
-  const ocultosOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
-  //Vicios
-  const viciosTranslateY = useTransform(
-    scrollYProgress,
-    [0.054, 0.16],
-    [0, 590]
-  );
+  const ocultosOpacity = useTransform(scrollYProgress, [0, 0.07], [1, 0]);
 
   // Dark overlay of "hero open up image"
   const darkOverlayOpacity = useTransform(
     scrollYProgress,
     [0.24, 0.34],
-    [0.2, 1] // Adjust the second value to control how dark the image gets
+    [0.58, 1] // Adjust the second value to control how dark the image gets
   );
 
   // Single panel animation (expands from the middle to cover the screen)
@@ -67,35 +62,17 @@ const Home = () => {
     [120, 90]
   );
 
-  // Fade-out the background image as the panel covers it.
-  // Figure this piece out. It's not exactly what I want.
-  // const imageOpacity = useTransform(scrollYProgress, [0.15, 0.2], [1, 0]);
+  const homeRef = useRef(null);
+  const storyRef = useRef(null);
+  const projectRef = useRef(null);
+  const connectRef = useRef(null);
 
-  const aboutRef = useRef(null);
-  const musicRef = useRef(null);
-  const contactRef = useRef(null);
-
-  const isAboutInView = useInView(aboutRef, { once: false });
-  const isMusicInView = useInView(musicRef, { once: false });
-  const isContactInView = useInView(contactRef, {
-    once: false,
+  const isHomeInView = useInView(homeRef);
+  const isStoryInView = useInView(storyRef, { amount: 0.5 });
+  const isProjectInView = useInView(projectRef, { amount: 0.5 });
+  const isConnectInView = useInView(connectRef, {
+    amount: 0.5,
   });
-
-  // const insetShadow = useTransform(
-  //   scrollYProgress,
-  //   [0, 0.2], // Adjust the range based on scroll
-  //   [
-  //     "inset 0px 0px 0px rgba(0, 0, 0, 0)",
-  //     "inset 0px 0px 30px rgba(0, 0, 0, 0.7)",
-  //   ]
-  // );
-
-  // const panelRotation = useTransform(
-  //   scrollYProgress,
-  //   [0, 0.2],
-  //   ["5deg", "0deg"]
-  // );
-  // const panelScale = useTransform(scrollYProgress, [0, 0.2], [1.2, 1]);
 
   return (
     <motion.div
@@ -107,22 +84,13 @@ const Home = () => {
       className="relative w-full bg-black"
     >
       <div className="relative  w-full bg-black">
-        <Navigation
-          isMusicInView={isMusicInView}
-          isAboutInView={isAboutInView}
-        />
-        <motion.div className="w-full h-[150vh] relative bg-black">
+        <motion.div
+          id="home-section"
+          ref={homeRef}
+          className="w-full h-[150vh] relative bg-black"
+        >
           <motion.div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center">
-            <motion.h1
-              className="text-9xl font-black text-white z-20"
-              style={
-                {
-                  // opacity: useTransform(scrollYProgress, [0.9, 1], [0, 1]), // Fade-in
-                  // scale: useTransform(scrollYProgress, [0.9, 1], [0.7, 1.5]), // Scale up
-                  // translateY: viciosTranslateY, // Try to make this sticky somehow actually
-                }
-              }
-            >
+            <motion.h1 className="text-9xl font-black text-white z-20">
               VICIOS
             </motion.h1>
             <motion.h2
@@ -137,7 +105,7 @@ const Home = () => {
         </motion.div>
         <div className="relative h-[250vh] w-full bg-black">
           {/* Landing Section */}
-          <motion.div className="sticky top-0 h-screen w-full flex justify-center bg-center bg-cover bg-[url('./assets/vicios-hero.jpeg')]">
+          <motion.div className="sticky top-0 h-screen w-full flex justify-center  bg-cover bg-no-repeat bg-[url('./assets/vicios-hero.jpeg')]">
             {/* Glow Overlay */}
             <motion.div
               className="absolute top-0 left-0 w-full h-full glow-overlay"
@@ -159,16 +127,16 @@ const Home = () => {
                 width: panelWidth,
                 boxShadow: "inset 0px 0px 30px rgba(0, 0, 0, 0.7)",
                 background: `
-        linear-gradient(
-          rgba(0, 0, 0, 1) 0%,
-          rgba(20, 20, 20, 1) 50%,
-          rgba(0, 0, 0, 1) 100%
-        ),
-        radial-gradient(
-          circle,
-          rgba(30,30, 30, 1) 0%,
-          rgba(0, 0, 0, 1) 80%
-        )`,
+                linear-gradient(
+                  rgba(0, 0, 0, 1) 0%,
+                  rgba(20, 20, 20, 1) 50%,
+                  rgba(0, 0, 0, 1) 100%
+                ),
+                radial-gradient(
+                  circle,
+                  rgba(30,30, 30, 1) 0%,
+                  rgba(0, 0, 0, 1) 80%
+                )`,
               }}
             >
               {/* Album Cover */}
@@ -179,7 +147,7 @@ const Home = () => {
                   scale: underneathScale, // Album cover zoom-in
                   width: "30vh",
                   height: "30vh",
-                  boxShadow: "0 0 40px -3px rgba(300, 300, 300, 0.7)",
+                  boxShadow: "0 0 10px 3px rgba(300, 300, 300, 0.7)",
                 }}
               />
 
@@ -204,55 +172,18 @@ const Home = () => {
           </motion.div>
         </div>
         {/* About Section */}
-        <AboutSection scrollYProgress={scrollYProgress} ref={aboutRef} />
-        <ProjectSection ref={musicRef} scrollYProgress={scrollYProgress} />
-        <ContactSection scrollYProgress={scrollYProgress} />
+        <AboutSection scrollYProgress={scrollYProgress} ref={storyRef} />
+        <ProjectSection ref={projectRef} scrollYProgress={scrollYProgress} />
+        <ContactSection ref={connectRef} scrollYProgress={scrollYProgress} />
       </div>
+      <Header
+        isStoryInView={isStoryInView}
+        isConnectInView={isConnectInView}
+        isProjectInView={isProjectInView}
+        isHomeInView={isHomeInView}
+      />
     </motion.div>
   );
 };
 
 export default Home;
-
-const Navigation = ({ isMusicInView, isAboutInView }) => {
-  return (
-    <nav className="fixed top-4 left-4 z-50">
-      <ul
-        className={`flex flex-row gap-16 text-xl font-bold ${
-          isMusicInView && !isAboutInView ? "text-white" : "text-blue-300"
-        }`}
-      >
-        <li>
-          <Link
-            to="about-section"
-            smooth={true}
-            duration={500}
-            className="cursor-pointer hover:text-blue-500"
-          >
-            Story
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="music-section"
-            smooth={true}
-            duration={500}
-            className="cursor-pointer hover:text-blue-500"
-          >
-            Project
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="contact-section"
-            smooth={true}
-            duration={500}
-            className="cursor-pointer hover:text-blue-500"
-          >
-            Connection
-          </Link>
-        </li>
-      </ul>
-    </nav>
-  );
-};

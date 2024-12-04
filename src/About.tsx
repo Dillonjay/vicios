@@ -91,29 +91,21 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
       [1, 0]
     );
 
-    const spotlightSize = "10%"; // Smaller size for a tighter circle
-    // const spotlightOpacity = useTransform(scrollYProgress, [0.4, 0.55], [0, 1]);
-    const spotlightPosition = useTransform(
-      scrollYProgress,
-      [0.5, 0.55],
-      ["50% 50%", "100% 100%"]
-    ); // From center to the bottom-right
-
-    console.log("scrollYProgress", scrollYProgress.get());
-    console.log("HELLO!!!!");
     return (
       <div className="relative h-[220vh]">
         <div className="sticky top-0 h-screen ">
           <motion.div
-            id="about-section"
+            id="story-section"
             ref={ref}
-            className="relative h-screen w-full flex flex-col items-center justify-center px-[5em] bg-center bg-cover bg-no-repeat"
+            className="relative h-screen w-full flex flex-col items-center justify-center px-[5em] bg-center bg-cover bg-no-repeat overflow-x-hidden"
             style={{
               opacity: opacity,
               backgroundImage: `
-              radial-gradient(circle at top left, #0A0A0A, #181818 40%, #0A0A0A 100%),
-              url('https://www.transparenttextures.com/patterns/asfalt-light.png')
-            `,
+                  radial-gradient(
+              circle,
+              #0A0A0A 0%,
+              #181818 100%
+            )`,
             }}
           >
             {/* Image Grid */}
