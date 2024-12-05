@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-scroll";
 
 interface HeaderProps {
@@ -11,37 +11,113 @@ interface HeaderProps {
 
 const LanguageToggle = () => {
   const [language, setLanguage] = useState("en"); // 'en' for English, 'es' for Spanish
-
+  const [isHovered, setIsHovered] = useState(false);
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === "en" ? "es" : "en"));
   };
 
   return (
-    <div className="flex items-center justify-center mt-6">
+    <div className="fixed top-4 right-4">
       {/* Toggle Container */}
-      <div
-        className="relative w-24 h-10 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-600 rounded-full shadow-inner flex items-center px-2"
+      <motion.div
         onClick={toggleLanguage}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="relative flex justify-between items-center p-5 cursor-pointer shadow-md overflow-hidden"
+        initial={{
+          width: "4rem",
+          height: "4rem",
+          borderRadius: "50%",
+        }}
+        whileHover={{
+          width: "12rem",
+          height: "4rem",
+          borderRadius: "8px",
+        }}
+        transition={{
+          delay: 0.1,
+          type: "spring",
+          stiffness: 200,
+          damping: 20,
+        }}
+        style={{ boxShadow: "0 4px 13px rgba(255, 255, 255, 0.5)" }}
       >
-        {/* US Flag */}
-        <span className="text-white text-sm">🇺🇸</span>
-
-        {/* Toggle Knob */}
         <motion.div
-          className="absolute w-8 h-8 bg-white rounded-full shadow-md border border-gray-300 cursor-pointer"
+          className="absolute inset-0 bg-cover bg-[150%] aspect-w-16 aspect-h-9 bg-[url('./assets/mountain.svg')]"
+          animate={{ opacity: language === "en" ? 1 : 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div
+            className={`absolute inset-0 bg-black ${
+              isHovered ? "bg-opacity-40" : ""
+            }`}
+          />
+        </motion.div>
+
+        <motion.div
+          className="absolute inset-0 bg-cover bg-[150%] aspect-w-16 aspect-h-9 bg-[url('./assets/canyon.svg')]"
+          animate={{ opacity: language === "es" ? 1 : 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div
+            className={`absolute inset-0 bg-black ${
+              isHovered ? "bg-opacity-40" : ""
+            }`}
+          />
+        </motion.div>
+        {/* Labels */}
+        <motion.span
+          className={`z-10 ${
+            isHovered ? "text-white " : "text-black"
+          } font-semibold`}
+          animate={{ opacity: language === "en" ? 0 : 1 }}
+          transition={{ duration: 0.2 }}
+        >
+          English
+        </motion.span>
+        <motion.span
+          className={`z-10 ${
+            isHovered ? "text-white " : "text-black"
+          }font-semibold`}
+          animate={{ opacity: language === "es" ? 0 : 1 }}
+          transition={{ duration: 0.2 }}
+        >
+          Español
+        </motion.span>
+
+        {/* Sliding Knob */}
+        <motion.div
+          className="absolute rounded-[8px] text-3xl shadow-lg flex items-center justify-center z-20"
+          style={{
+            background: "transparent",
+          }}
+          initial={{ top: 0, left: 0 }}
           animate={{
-            x: language === "en" ? 0 : 40, // Moves knob left or right
+            width: isHovered ? "3rem" : "4rem",
+            height: isHovered ? "3rem" : "4rem",
+            // TODO: useMemo for performance
+            left:
+              !isHovered && language === "es"
+                ? "calc(100% - 64px)"
+                : !isHovered && language === "en"
+                ? 0
+                : language === "en"
+                ? 6
+                : "calc(100% - 55px)",
+            top: !isHovered ? 0 : "0.5rem",
+            background: isHovered
+              ? "linear-gradient(to bottom,#f3ec78, #af4261)"
+              : "black",
           }}
           transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 20,
+            type: "easeInOut",
+            duration: 0.2,
+            // damping: 20,
           }}
-        ></motion.div>
-
-        {/* Mexican Flag */}
-        <span className="text-white text-sm ml-auto">🇲🇽</span>
-      </div>
+        >
+          {language === "en" ? "🇺🇸" : "🇲🇽"}
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
@@ -64,15 +140,15 @@ const Header = ({
       scale: 1,
       x: 0,
       y: 0,
-      transition: { type: "spring", stiffness: 300, damping: 30 },
+      transition: { type: "spring", stiffness: 200, damping: 20 },
     },
     open: {
       width: "20rem",
-      height: "20rem",
+      height: "11rem",
       borderRadius: "4%",
       scale: 1.5,
       x: "-17rem",
-      y: "-5rem",
+      y: "1rem",
       transition: { type: "spring", stiffness: 300, damping: 20 },
     },
   };
@@ -86,20 +162,22 @@ const Header = ({
 
   return (
     <>
-      {isOpen && (
-        <motion.div
-          className="fixed inset-0 bg-black z-40"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.7 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          onClick={() => setIsOpen(false)} // Clicking the overlay closes the menu
-        />
-      )}
-      <div className="fixed top-0 left-0 z-50 ">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="fixed inset-0 bg-black z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.7 }}
+            exit={{ opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            onClick={() => setIsOpen(false)} // Clicking the overlay closes the menu
+          />
+        )}
+      </AnimatePresence>
+      <div className="fixed top-0 left-0 z-50">
         {/* Expanding Circular Menu */}
         <motion.div
-          className="absolute top-3 left-3 bg-white text-black shadow-lg cursor-pointer"
+          className="absolute top-4 left-4 cursor-pointer"
           style={{
             overflow: "hidden",
             boxShadow: isOpen ? "none" : "0 4px 13px rgba(255, 255, 255, 0.5)",
@@ -114,12 +192,11 @@ const Header = ({
             isOpen
               ? {}
               : {
-                  scale: 1.05, // Slight scale effect
-                  y: [-2, 0, -2], // Subtle bounce effect
+                  scale: [1.05, 1, 1.05], // Add a subtle pulse effect
                   transition: {
-                    duration: 0.4,
+                    type: "reverse",
+                    duration: 1,
                     repeat: Infinity,
-                    repeatType: "reverse",
                   },
                   background: "linear-gradient(135deg, #f3ec78, #af4261)", // Add a gradient background
                 }
@@ -187,13 +264,10 @@ const Header = ({
                 <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-300"></span>
               </Link>
             ))}
-
-            {/* Divider */}
-            <div className="border-t border-black mt-4"></div>
-
-            <LanguageToggle />
           </motion.div>
         )}
+        <AnimatePresence>{isOpen && <LanguageToggle />}</AnimatePresence>
+        <LanguageToggle />
       </div>
     </>
   );
