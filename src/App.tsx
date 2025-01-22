@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import Lenis from "@studio-freight/lenis";
 import Home from "./Home";
@@ -7,7 +8,7 @@ import enMessages from "./locales/en.json";
 import esMessages from "./locales/es.json";
 import { Languages } from "./types.ts";
 
-import { LanguageToggle } from "./LanguageToggle";
+import { LanguageToggle } from "./components/LanguageToggle/index.ts";
 
 const messages: Record<string, Record<string, string>> = {
   en: enMessages,
@@ -37,7 +38,7 @@ const App = () => {
 
   return (
     <IntlProvider locale={language} messages={messages[language]}>
-      <div className="fixed top-6 right-6 z-40">
+      <div className="fixed top-6 right-6 z-50">
         <LanguageToggle language={language} setLanguage={setLanguage} />
       </div>
       <Home />

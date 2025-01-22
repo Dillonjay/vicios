@@ -1,4 +1,6 @@
 {
+  "navigation.closeMenu": "Cerrar Menú",
+  "navigation.openMenu": "Abrir Menú",
   "navigation.home": "Inicio",
   "navigation.story": "Historia",
   "navigation.project": "Proyecto",

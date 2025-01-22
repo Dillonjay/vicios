@@ -1,12 +1,12 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { Link } from "react-scroll";
+
 import AboutSection from "./About";
 import ProjectSection from "./Project";
 import ContactSection from "./Contact";
 
 import { FaApple, FaYoutube, FaSpotify } from "react-icons/fa6";
-import Header from "./Header";
+import { Header } from "./components/Header";
 
 interface MusicButtonProps {
   icon: any; // The icon component (e.g., FaSpotify, FaApple, etc.)

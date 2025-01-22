@@ -5,6 +5,8 @@ import vicios1 from "./assets/vicios-1.jpeg";
 import vicios3 from "./assets/vicios-3.jpeg";
 import vicios4 from "./assets/vicios-4.jpeg";
 import vicios5 from "./assets/vicios-5.jpeg";
+import { FormattedMessage } from "react-intl";
+import { messages } from "./storyMessages";
 
 interface AboutSectionProps {
   scrollYProgress: MotionValue<number>;
@@ -90,10 +92,28 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
       [0.73, 0.84],
       [1, 0]
     );
+    const storyOpacity = useTransform(scrollYProgress, [0.73, 0.78], [1, 0]);
+    const storyTranslateY = useTransform(
+      scrollYProgress,
+      [0.73, 0.75],
+      [0, 65]
+    );
 
     return (
       <div className="relative h-[220vh]">
         <div className="sticky top-0 h-screen ">
+          <div className="absolute bottom-0 w-full flex justify-end z-30">
+            <motion.div
+              className="text-white text-7xl font-black uppercase tracking-wide"
+              style={{
+                opacity: storyOpacity,
+                translateY: storyTranslateY,
+              }}
+              transition={{ duration: 0.5 }}
+            >
+              OUR STORY
+            </motion.div>
+          </div>
           <motion.div
             id="story-section"
             ref={ref}
@@ -102,48 +122,88 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
               opacity: opacity,
               backgroundImage: `
                   radial-gradient(
-              circle,
-              #0A0A0A 0%,
-              #181818 100%
-            )`,
+                  circle,
+                  #0A0A0A 0%,
+                  #181818 100%
+              )`,
             }}
           >
             {/* Image Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 relative z-20">
+            <div className=" grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 relative z-20">
               <motion.div
-                className="relative overflow-hidden shadow-lg row-span-2"
+                className="group relative overflow-hidden shadow-lg row-span-2"
                 style={{
                   x: slideInFromLeft,
                   scale: scale1,
                   opacity: fadeOtherImages,
                 }}
+                whileHover={{
+                  transition: { duration: 0.5 },
+                  boxShadow: "0px 0px 6px 1px rgba(255,255,255,0.2)",
+                }}
               >
-                <img src={vicios5} className="w-full h-full object-cover" />
+                <motion.img
+                  src={vicios5}
+                  className="w-full h-full object-cover"
+                  whileHover={{
+                    scale: 1.07,
+                    opacity: 0.8,
+                  }}
+                  transition={{
+                    duration: 0.4,
+                    ease: "easeOut",
+                  }}
+                />
               </motion.div>
+
               <motion.div
-                className="relative overflow-hidden shadow-lg max-h-[20em]"
+                className="group relative overflow-hidden shadow-lg max-h-[20em]"
                 style={{
                   y: slideInFromTop,
                   scale: scale3,
                   opacity: fadeOtherImages,
                 }}
+                whileHover={{
+                  transition: { duration: 0.5 },
+                  boxShadow: "0px 0px 6px 1px rgba(255,255,255,0.2)",
+                }}
               >
-                <img
+                <motion.img
                   src={vicios4}
-                  className="w-full h-full object-cover aspect-square"
+                  className="w-full h-full object-cover"
+                  whileHover={{
+                    scale: 1.07,
+                    opacity: 0.8,
+                  }}
+                  transition={{
+                    duration: 0.4,
+                    ease: "easeOut",
+                  }}
                 />
               </motion.div>
               <motion.div
-                className="relative overflow-hidden shadow-lg max-h-[20em]"
+                className="group relative overflow-hidden shadow-lg max-h-[20em]"
                 style={{
                   x: slideInFromRight,
                   opacity: fadeOtherImages,
                   scale: scale2,
                 }}
+                whileHover={{
+                  transition: { duration: 0.5 },
+                  boxShadow: "0px 0px 6px 1px rgba(255,255,255,0.2)",
+                }}
               >
-                <img
+                <motion.img
                   src={vicios3}
-                  className="w-full h-full object-cover aspect-square"
+                  className="w-full h-full object-cover"
+                  whileHover={{
+                    scale: 1.07,
+                    opacity: 0.8,
+                  }}
+                  transition={{
+                    duration: 0.4,
+                    ease: "easeOut",
+                  }}
                 />
               </motion.div>
               <motion.div
@@ -162,7 +222,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                 />
                 {/* Sliding Panel */}
                 <motion.div
-                  className="absolute bottom-0 left-0 w-full bg-opacity-90 text-white p-6 rounded-t-lg shadow-lg"
+                  className="absolute bottom-0 left-0 w-full bg-opacity-90 text-white p-6 rounded-t-lg "
                   style={{
                     background: "#0F0F0F",
                     translateY: slidingPanelTranslateY,
@@ -176,7 +236,9 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                       opacity: slidingPanelExitTextOpacity,
                     }}
                   >
-                    <h2 className="text-xl font-bold">About Us</h2>
+                    <h2 className="text-xl font-bold">
+                      <FormattedMessage {...messages.title} />
+                    </h2>
                     <p className="text-sm mt-2 font-light">
                       Blah Blah Blah Blah fucking Blah blah blah Fucking blah.
                       Blah blah blfucking balwwwwh

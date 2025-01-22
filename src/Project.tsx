@@ -1,10 +1,5 @@
 import { forwardRef, useState } from "react";
-import {
-  motion,
-  useTransform,
-  MotionValue,
-  AnimatePresence,
-} from "framer-motion";
+import { motion, useTransform, MotionValue } from "framer-motion";
 import viciosCierto from "./assets/cierto-cover.jpeg";
 import viciosBack from "./assets/vicios-back-cover.png";
 import viciosOndos from "./assets/vicios-1.jpeg";
@@ -12,6 +7,8 @@ import MusicButton from "./MusicButton";
 import { ImSpinner3 } from "react-icons/im";
 import { FaApple, FaSpotify, FaYoutube } from "react-icons/fa6";
 import LyricsAnimator from "./Lyrics";
+import { FormattedMessage } from "react-intl";
+import { messages } from "./projectMessages";
 
 interface FallingTextProps {
   phrase: string;
@@ -66,13 +63,6 @@ interface ProjectSectionProps {
   scrollYProgress: MotionValue<number>;
 }
 
-const ciertoLetras = [
-  "For stories to be told",
-  "Let the memories unfold",
-  "Lo cierto no se va",
-  "Lo cierto al final",
-];
-
 const letras = [
   "Lo cierto al final",
   "Lo cierto no se va",
@@ -84,12 +74,18 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
     const [hoveredImage, setHoveredImage] = useState<string | null>(null);
 
     const phrases = ["The night isn't over", "Until I'm", "Far from", "Sober"];
+    const projectOpacity = useTransform(scrollYProgress, [0.9, 0.95], [1, 0]);
+    const projectTranslateY = useTransform(
+      scrollYProgress,
+      [0.9, 0.95],
+      [0, 65]
+    );
 
     return (
       <div
         id="project-section"
         ref={ref}
-        className="h-[100vh] bg-black px-32 relative"
+        className="relative p-32 h-[100vh] bg-black overflow-hidden"
         style={{
           background: `
             linear-gradient(
@@ -104,6 +100,18 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
             )`,
         }}
       >
+        <div className="absolute bottom-5 right-0 w-full flex justify-end z-30">
+          <motion.div
+            className="text-white text-7xl font-black uppercase tracking-wide"
+            style={{
+              opacity: projectOpacity,
+              translateY: projectTranslateY,
+            }}
+            transition={{ duration: 0.5 }}
+          >
+            Our Penis
+          </motion.div>
+        </div>
         {/* Falling Text and Image Row */}
         <div className="flex justify-between pt-24">
           <div className="flex flex-col">
@@ -173,7 +181,9 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
             onMouseLeave={() => setHoveredImage(null)} // Reset to default
           >
             <div className="flex items-center gap-3">
-              <h3 className="text-4xl text-white font-bold">Coming Soon</h3>
+              <h3 className="text-4xl text-white font-bold">
+                <FormattedMessage {...messages.comingSoon} />
+              </h3>
               <ImSpinner3
                 className="text-white text-4xl animate-spin"
                 style={{ animationDuration: "2s" }}

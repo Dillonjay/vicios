@@ -7,6 +7,8 @@ import {
   FaApple,
 } from "react-icons/fa6";
 import { useState, useEffect, forwardRef } from "react";
+import { messages } from "./connectMessages";
+import { FormattedMessage } from "react-intl";
 
 // Custom hook to track mouse position
 const useMousePosition = () => {
@@ -77,7 +79,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                 translateY: connectTranslateY,
               }}
             >
-              CONNECT
+              <FormattedMessage {...messages.connect} />
             </motion.h1>
             <motion.h3
               className="mt-5 text-6xl font-light"
@@ -114,7 +116,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
               translateY: connectTranslateY,
             }}
           >
-            CONNECT
+            <FormattedMessage {...messages.connect} />
           </motion.h1>
           <motion.h3
             className="mt-5 text-6xl font-light"

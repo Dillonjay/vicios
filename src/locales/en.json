@@ -1,4 +1,6 @@
 {
+  "navigation.closeMenu": "Close Menu",
+  "navigation.openMenu": "Open Menu",
   "navigation.home": "Home",
   "navigation.story": "Story",
   "navigation.project": "Project",
