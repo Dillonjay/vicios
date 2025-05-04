@@ -5,8 +5,9 @@
   "navigation.story": "Historia",
   "navigation.project": "Proyecto",
   "navigation.connect": "Conectar",
-  "story.title": "Nuestra Historia",
-  "story.story": "Dos hermanos, cada uno en su propio camino—de las veladas ahumadas del desierto a las claras mañanas de montaña—se encontraron en una encrucijada. Exploramos los sonidos y sensaciones que surgen de nuestra singular mezcla de inspiraciones.",
+  "about.title": "Nuestra Historia",
+  "about.story1": "Dos hermanos en caminos distintos. De atardeceres ahumados en el desierto a mañanas despejadas en la montaña, cada uno cargaba ideas a medio cocer y letras. Hasta que, un día señalado, esos caminos convergieron en un cruce silencioso; nuevos sonidos cobraron aliento y dos rutas se volvieron una.",
+  "about.story2": "Vicios Ocultos, con Luis “Wimi” Reyas y “Poncho” Dillon Lundell, exploran los sonidos y las sensaciones que surgen de su singular mezcla de inspiraciones.",
   "project.title": "Nuestros Proyectos",
   "project.comingSoon": "Próximamente",
   "connect.title": "CONECTAR"

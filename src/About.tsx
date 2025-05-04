@@ -236,11 +236,14 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                       opacity: slidingPanelExitTextOpacity,
                     }}
                   >
-                    <h2 className="text-xl font-bold">
+                    <h2 className="text-xl mb-2 font-bold">
                       <FormattedMessage {...messages.title} />
                     </h2>
-                    <p className="text-sm mt-2 font-light">
-                      <FormattedMessage {...messages.story} />
+                    <p className="text-sm mb-1  font-light">
+                      <FormattedMessage {...messages.story1} />
+                    </p>
+                    <p className="text-sm font-light">
+                      <FormattedMessage {...messages.story2} />
                     </p>
                   </motion.div>
                 </motion.div>

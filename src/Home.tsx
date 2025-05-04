@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Navigation } from "./components/Navigation/Navigation";
-import SectionContainer from "./components/SectionContainer";
 import AboutSection from "./About";
 import ProjectSection from "./Project";
 import ContactSection from "./Connect";
@@ -72,19 +71,17 @@ const Home = () => {
           className="w-full h-[150vh] relative bg-black"
         >
           <motion.div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center px-4">
-            <SectionContainer>
-              <motion.h1 className="text-5xl md:text-7xl lg:text-9xl font-black text-white z-20 text-center">
-                VICIOS
-              </motion.h1>
-              <motion.h2
-                className="text-4xl md:text-5xl lg:text-7xl font-black text-white text-center"
-                style={{
-                  opacity: ocultosOpacity,
-                }}
-              >
-                OCULTOS
-              </motion.h2>
-            </SectionContainer>
+            <motion.h1 className="text-5xl md:text-7xl lg:text-9xl font-black text-white z-20 text-center">
+              VICIOS
+            </motion.h1>
+            <motion.h2
+              className="text-4xl md:text-5xl lg:text-7xl font-black text-white text-center"
+              style={{
+                opacity: ocultosOpacity,
+              }}
+            >
+              OCULTOS
+            </motion.h2>
           </motion.div>
         </motion.div>
         <div className="relative h-[250vh] w-full bg-black">
@@ -123,48 +120,46 @@ const Home = () => {
                 )`,
               }}
             >
-              <SectionContainer>
-                {/* Album Cover */}
-                <motion.div
-                  className="bg-center bg-cover bg-[url('./assets/cierto-cover.jpeg')]"
-                  style={{
-                    opacity: underneathOpacity,
-                    scale: underneathScale,
-                    width: "60vw",
-                    height: "60vw",
-                    maxWidth: "30vh",
-                    maxHeight: "30vh",
-                    boxShadow: "0 0 10px 3px rgba(300, 300, 300, 0.7)",
-                  }}
-                />
+              {/* Album Cover */}
+              <motion.div
+                className="bg-center bg-cover bg-[url('./assets/cierto-cover.jpeg')]"
+                style={{
+                  opacity: underneathOpacity,
+                  scale: underneathScale,
+                  width: "60vw",
+                  height: "60vw",
+                  maxWidth: "30vh",
+                  maxHeight: "30vh",
+                  boxShadow: "0 0 10px 3px rgba(300, 300, 300, 0.7)",
+                }}
+              />
 
-                {/* Supporting Text */}
-                <motion.div
-                  className="text-center text-white mt-8"
-                  style={{
-                    opacity: singleTextOpacity,
-                    translateY: singleTextTranslateY,
-                  }}
-                >
-                  <h2 className="text-xl md:text-2xl font-bold mb-4">
-                    Vicios Ocultos - Lo Cierto
-                  </h2>
-                  <div className="flex justify-center items-center gap-2 md:gap-4">
-                    <MusicButton
-                      icon={FaSpotify}
-                      href="https://open.spotify.com/artist/viciososocultos"
-                    />
-                    <MusicButton
-                      icon={FaApple}
-                      href="https://music.apple.com/artist/viciososocultos"
-                    />
-                    <MusicButton
-                      icon={FaYoutube}
-                      href="https://youtube.com/@viciososocultos"
-                    />
-                  </div>
-                </motion.div>
-              </SectionContainer>
+              {/* Supporting Text */}
+              <motion.div
+                className="text-center text-white mt-8"
+                style={{
+                  opacity: singleTextOpacity,
+                  translateY: singleTextTranslateY,
+                }}
+              >
+                <h2 className="text-xl md:text-2xl font-bold mb-4">
+                  Vicios Ocultos - Lo Cierto
+                </h2>
+                <div className="flex justify-center items-center gap-2 md:gap-4">
+                  <MusicButton
+                    icon={FaSpotify}
+                    href="https://open.spotify.com/artist/viciososocultos"
+                  />
+                  <MusicButton
+                    icon={FaApple}
+                    href="https://music.apple.com/artist/viciososocultos"
+                  />
+                  <MusicButton
+                    icon={FaYoutube}
+                    href="https://youtube.com/@viciososocultos"
+                  />
+                </div>
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>

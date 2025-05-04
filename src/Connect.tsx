@@ -9,7 +9,6 @@ import {
 import { useState, useEffect, forwardRef } from "react";
 import { messages } from "./connectMessages";
 import { FormattedMessage } from "react-intl";
-import SectionContainer from "./components/SectionContainer";
 
 // Custom hook to track mouse position
 const useMousePosition = () => {
@@ -55,7 +54,7 @@ const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
       <div
         id="connect-section"
         ref={ref}
-        className="relative h-screen w-full bg-black"
+        className="relative h-screen w-full bg-black overflow-hidden max-w-[100rem] mx-auto"
       >
         {/* Top Layer: White text visible by default */}
         <motion.div
