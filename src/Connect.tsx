@@ -27,11 +27,11 @@ const useMousePosition = () => {
   return mousePosition;
 };
 
-interface ContactSectionProps {
+interface ConnectSectionProps {
   scrollYProgress: MotionValue<number>;
 }
 
-const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
+const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
   ({ scrollYProgress }, ref) => {
     const { x, y } = useMousePosition(); // Cursor position
     const [isHovered, setIsHovered] = useState(false); // Hover state
@@ -79,7 +79,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                 translateY: connectTranslateY,
               }}
             >
-              <FormattedMessage {...messages.connect} />
+              <FormattedMessage {...messages.title} />
             </motion.h1>
             <motion.h3
               className="mt-5 text-3xl md:text-4xl lg:text-6xl font-light"
@@ -156,7 +156,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
               translateY: connectTranslateY,
             }}
           >
-            <FormattedMessage {...messages.connect} />
+            <FormattedMessage {...messages.title} />
           </motion.h1>
           <motion.h3
             className="mt-5 text-3xl md:text-4xl lg:text-6xl font-light"
@@ -228,4 +228,4 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
   }
 );
 
-export default ContactSection;
+export default ConnectSection;

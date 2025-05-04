@@ -3,7 +3,7 @@ import { motion, useTransform, MotionValue } from "framer-motion";
 import viciosCierto from "./assets/cierto-cover.jpeg";
 import viciosBack from "./assets/vicios-back-cover.png";
 import viciosOndos from "./assets/vicios-1.jpeg";
-import MusicButton from "./MusicButton";
+import { MusicButton } from "./MusicButton";
 import { ImSpinner3 } from "react-icons/im";
 import { FaApple, FaSpotify, FaYoutube } from "react-icons/fa6";
 import { FormattedMessage } from "react-intl";

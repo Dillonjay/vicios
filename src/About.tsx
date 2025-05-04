@@ -6,7 +6,7 @@ import vicios3 from "./assets/vicios-3.jpeg";
 import vicios4 from "./assets/vicios-4.jpeg";
 import vicios5 from "./assets/vicios-5.jpeg";
 import { FormattedMessage } from "react-intl";
-import { messages } from "./storyMessages";
+import { messages } from "./aboutMessages";
 
 interface AboutSectionProps {
   scrollYProgress: MotionValue<number>;
@@ -111,7 +111,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
               }}
               transition={{ duration: 0.5 }}
             >
-              OUR STORY
+              <FormattedMessage {...messages.title} />
             </motion.div>
           </div>
           <motion.div
@@ -240,13 +240,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                       <FormattedMessage {...messages.title} />
                     </h2>
                     <p className="text-sm mt-2 font-light">
-                      Blah Blah Blah Blah fucking Blah blah blah Fucking blah.
-                      Blah blah blfucking balwwwwh
-                    </p>
-                    <p className="text-sm mt-2 font-light">
-                      Blah Blah Blah Blah fucking Blah blah blah Fucking blah.
-                      Blah blah blfucking balwwwwh. Y ma balch pinche balh balch
-                      puto.
+                      <FormattedMessage {...messages.story} />
                     </p>
                   </motion.div>
                 </motion.div>
