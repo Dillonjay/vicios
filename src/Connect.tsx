@@ -9,6 +9,7 @@ import {
 import { useState, useEffect, forwardRef } from "react";
 import { messages } from "./connectMessages";
 import { FormattedMessage } from "react-intl";
+import SectionContainer from "./components/SectionContainer";
 
 // Custom hook to track mouse position
 const useMousePosition = () => {
@@ -33,9 +34,9 @@ interface ConnectSectionProps {
 
 const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
   ({ scrollYProgress }, ref) => {
-    const { x, y } = useMousePosition(); // Cursor position
-    const [isHovered, setIsHovered] = useState(false); // Hover state
-    const size = isHovered ? 300 : 50; // Mask size dynamically changes on hover
+    const { x, y } = useMousePosition();
+    const [isHovered, setIsHovered] = useState(false);
+    const size = isHovered ? 300 : 50;
 
     const contentOpacity = useTransform(scrollYProgress, [0.93, 1], [0, 1]);
     const connectTranslateY = useTransform(
@@ -147,6 +148,7 @@ const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
             </motion.div>
           </div>
         </motion.div>
+
         <div className="w-full h-full flex flex-col items-center justify-center text-white">
           <motion.h1
             className="text-6xl md:text-7xl lg:text-9xl font-black"

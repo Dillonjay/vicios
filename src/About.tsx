@@ -96,24 +96,24 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
     const storyTranslateY = useTransform(
       scrollYProgress,
       [0.73, 0.75],
-      [0, 65]
+      [0, 75]
     );
 
     return (
       <div className="relative h-[220vh]">
-        <div className="sticky top-0 h-screen ">
-          <div className="absolute bottom-0 w-full flex justify-end z-30">
-            <motion.div
-              className="text-white text-7xl font-black uppercase tracking-wide"
-              style={{
-                opacity: storyOpacity,
-                translateY: storyTranslateY,
-              }}
-              transition={{ duration: 0.5 }}
-            >
+        <div className="sticky top-0 h-screen max-w-[100rem] mx-auto">
+          <motion.div
+            className="absolute bottom-2 border-b-4 border-[#4b4b4a] w-full flex justify-end z-30 px-[5em]"
+            style={{
+              opacity: storyOpacity,
+              translateY: storyTranslateY,
+            }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="text-white text-7xl font-black uppercase tracking-wide">
               <FormattedMessage {...messages.title} />
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
           <motion.div
             id="story-section"
             ref={ref}
@@ -124,7 +124,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
                   radial-gradient(
                   circle,
                   #0A0A0A 0%,
-                  #181818 100%
+                  #000000 100%
               )`,
             }}
           >
