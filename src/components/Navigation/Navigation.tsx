@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import classNames from "classnames";
 import { messages } from "./messages";
 
-interface HeaderProps {
+interface NavigationProps {
   isHomeInView: boolean;
   isStoryInView: boolean;
   isProjectInView: boolean;
@@ -30,8 +30,8 @@ const MENU_VARIANTS = {
     transition: { type: "spring", stiffness: 200, damping: 20 },
   },
   open: {
-    width: "20rem",
-    height: "11rem",
+    width: "25rem",
+    height: "14rem",
     borderRadius: "4%",
     scale: 1.5,
     x: "-17rem",
@@ -46,12 +46,12 @@ const STATIC_STYLES = {
   closedBackground: "radial-gradient(circle, #181818, #0A0A0A)",
 };
 
-const Header = ({
+export const Navigation = ({
   isHomeInView,
   isStoryInView,
   isProjectInView,
   isConnectInView,
-}: HeaderProps) => {
+}: NavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const intl = useIntl();
 
@@ -63,9 +63,7 @@ const Header = ({
   };
 
   const toggleMenu = (e: React.KeyboardEvent | React.MouseEvent) => {
-    if ("key" in e && e.key !== "Enter" && e.key !== " ") {
-      return;
-    }
+    if ("key" in e && e.key !== "Enter" && e.key !== " ") return;
     setIsOpen((prev) => !prev);
   };
 
@@ -118,7 +116,7 @@ const Header = ({
                 }
           }
           onClick={toggleMenu}
-          onKeyDown={toggleMenu} // Keyboard interaction
+          onKeyDown={toggleMenu}
         />
 
         {/* Hamburger-to-X Icon */}
@@ -151,7 +149,7 @@ const Header = ({
         {/* Links */}
         {isOpen && (
           <motion.div
-            className="absolute top-[4.5rem] left-6 flex flex-col space-y-4 text-xl"
+            className="absolute top-[5.5rem] left-6 flex flex-col space-y-7 text-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -161,14 +159,14 @@ const Header = ({
               <Link
                 key={section}
                 to={`${section}-section`}
-                spy={true}
-                smooth={true}
+                spy
+                smooth
                 duration={500}
                 offset={0}
                 onClick={() => setIsOpen(false)}
                 className={classNames(
                   activeStates[section] ? "font-bold" : "font-light",
-                  "text-white hover:tracking-widest transition-all duration-300 group relative cursor-pointer"
+                  "text-[1.7rem] text-white hover:tracking-widest transition-all duration-300 group relative cursor-pointer"
                 )}
               >
                 <motion.span
@@ -177,7 +175,7 @@ const Header = ({
                 >
                   {intl.formatMessage(messages[section])}
                 </motion.span>
-                <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-300"></span>
+                <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-300" />
               </Link>
             ))}
           </motion.div>
@@ -186,5 +184,3 @@ const Header = ({
     </>
   );
 };
-
-export { Header };

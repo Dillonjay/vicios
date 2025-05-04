@@ -14,7 +14,7 @@ import { FormattedMessage } from "react-intl";
 const useMousePosition = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const updateMousePosition = (e) => {
+  const updateMousePosition = (e: MouseEvent) => {
     setMousePosition({ x: e.clientX, y: e.clientY });
   };
 
@@ -72,7 +72,7 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
             onMouseLeave={() => setIsHovered(false)}
           >
             <motion.h1
-              className="text-9xl font-black"
+              className="text-6xl md:text-7xl lg:text-9xl font-black"
               style={{
                 opacity: contentOpacity,
                 scale: connectScale,
@@ -82,14 +82,19 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
               <FormattedMessage {...messages.connect} />
             </motion.h1>
             <motion.h3
-              className="mt-5 text-6xl font-light"
+              className="mt-5 text-3xl md:text-4xl lg:text-6xl font-light"
               style={{
                 scale: restScale,
                 opacity: restOpacity,
                 translateY: restTranslateY,
               }}
             >
-              viciosocultos@gmail.com
+              <a
+                href="mailto:viciosocultos@gmail.com"
+                className="hover:text-cyan-400 transition-colors duration-300"
+              >
+                viciosocultos@gmail.com
+              </a>
             </motion.h3>
             <motion.div
               className="flex mt-5 justify-between gap-4"
@@ -99,17 +104,52 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
                 translateY: restTranslateY,
               }}
             >
-              <FaSpotify size="3em" />
-              <FaInstagram size="3em" />
-              <FaYoutube size="3em" />
-              <FaApple size="3em" />
-              <FaFacebook size="3em" />
+              <a
+                href="https://open.spotify.com/artist/viciososocultos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-green-500 transition-colors duration-300"
+              >
+                <FaSpotify size="2em" className="md:text-3xl" />
+              </a>
+              <a
+                href="https://instagram.com/viciososocultos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-pink-500 transition-colors duration-300"
+              >
+                <FaInstagram size="2em" className="md:text-3xl" />
+              </a>
+              <a
+                href="https://youtube.com/@viciososocultos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-red-500 transition-colors duration-300"
+              >
+                <FaYoutube size="2em" className="md:text-3xl" />
+              </a>
+              <a
+                href="https://music.apple.com/artist/viciososocultos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-gray-300 transition-colors duration-300"
+              >
+                <FaApple size="2em" className="md:text-3xl" />
+              </a>
+              <a
+                href="https://facebook.com/viciososocultos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-blue-500 transition-colors duration-300"
+              >
+                <FaFacebook size="2em" className="md:text-3xl" />
+              </a>
             </motion.div>
           </div>
         </motion.div>
         <div className="w-full h-full flex flex-col items-center justify-center text-white">
           <motion.h1
-            className="text-9xl font-black"
+            className="text-6xl md:text-7xl lg:text-9xl font-black"
             style={{
               opacity: contentOpacity,
               scale: connectScale,
@@ -119,14 +159,19 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
             <FormattedMessage {...messages.connect} />
           </motion.h1>
           <motion.h3
-            className="mt-5 text-6xl font-light"
+            className="mt-5 text-3xl md:text-4xl lg:text-6xl font-light"
             style={{
               scale: restScale,
               opacity: restOpacity,
               translateY: restTranslateY,
             }}
           >
-            viciosocultos@gmail.com
+            <a
+              href="mailto:viciosocultos@gmail.com"
+              className="hover:text-cyan-400 transition-colors duration-300"
+            >
+              viciosocultos@gmail.com
+            </a>
           </motion.h3>
           <motion.div
             className="flex mt-5 justify-between gap-4"
@@ -136,11 +181,46 @@ const ContactSection = forwardRef<HTMLDivElement, ContactSectionProps>(
               translateY: restTranslateY,
             }}
           >
-            <FaSpotify size="3em" />
-            <FaInstagram size="3em" />
-            <FaYoutube size="3em" />
-            <FaApple size="3em" />
-            <FaFacebook size="3em" />
+            <a
+              href="https://open.spotify.com/artist/viciososocultos"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-green-500 transition-colors duration-300"
+            >
+              <FaSpotify size="2em" className="md:text-3xl" />
+            </a>
+            <a
+              href="https://instagram.com/viciososocultos"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-pink-500 transition-colors duration-300"
+            >
+              <FaInstagram size="2em" className="md:text-3xl" />
+            </a>
+            <a
+              href="https://youtube.com/@viciososocultos"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-red-500 transition-colors duration-300"
+            >
+              <FaYoutube size="2em" className="md:text-3xl" />
+            </a>
+            <a
+              href="https://music.apple.com/artist/viciososocultos"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-gray-300 transition-colors duration-300"
+            >
+              <FaApple size="2em" className="md:text-3xl" />
+            </a>
+            <a
+              href="https://facebook.com/viciososocultos"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-blue-500 transition-colors duration-300"
+            >
+              <FaFacebook size="2em" className="md:text-3xl" />
+            </a>
           </motion.div>
         </div>
       </div>

@@ -1,7 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import Lenis from "@studio-freight/lenis";
-import Home from "./Home";
 
 import { IntlProvider } from "react-intl";
 import enMessages from "./locales/en.json";
@@ -9,6 +8,10 @@ import esMessages from "./locales/es.json";
 import { Languages } from "./types.ts";
 
 import { LanguageToggle } from "./components/LanguageToggle/index.ts";
+import LoadingSpinner from "./components/LoadingSpinner";
+
+// Lazy load the Home component
+const Home = lazy(() => import("./Home"));
 
 const messages: Record<string, Record<string, string>> = {
   en: enMessages,
@@ -30,7 +33,6 @@ const App = () => {
     };
 
     requestAnimationFrame(raf);
-
     return () => {
       lenis.destroy();
     };
@@ -41,7 +43,15 @@ const App = () => {
       <div className="fixed top-6 right-6 z-50">
         <LanguageToggle language={language} setLanguage={setLanguage} />
       </div>
-      <Home />
+      <Suspense
+        fallback={
+          <div className="h-screen w-full flex items-center justify-center bg-black">
+            <LoadingSpinner size="large" />
+          </div>
+        }
+      >
+        <Home />
+      </Suspense>
     </IntlProvider>
   );
 };

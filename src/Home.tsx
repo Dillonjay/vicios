@@ -1,16 +1,16 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-
+import { IconType } from "react-icons";
+import { Navigation } from "./components/Navigation/Navigation";
 import AboutSection from "./About";
 import ProjectSection from "./Project";
 import ContactSection from "./Contact";
 
 import { FaApple, FaYoutube, FaSpotify } from "react-icons/fa6";
-import { Header } from "./components/Header";
 
 interface MusicButtonProps {
-  icon: any; // The icon component (e.g., FaSpotify, FaApple, etc.)
-  href: string; // The URL to link to
+  icon: IconType;
+  href: string;
 }
 
 const MusicButton: React.FC<MusicButtonProps> = ({ icon: Icon, href }) => {
@@ -19,10 +19,10 @@ const MusicButton: React.FC<MusicButtonProps> = ({ icon: Icon, href }) => {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center justify-center p-4 rounded-full bg-transparent text-white transition duration-300 ease-in-out 
-        hover:text-cyan-400"
+      className="group flex items-center justify-center p-3 md:p-4 rounded-full bg-transparent text-white transition duration-300 ease-in-out 
+        hover:text-cyan-400 touch-manipulation"
     >
-      <Icon className="text-3xl group-hover:scale-110 transition-transform duration-300" />
+      <Icon className="text-2xl md:text-3xl group-hover:scale-110 transition-transform duration-300" />
     </a>
   );
 };
@@ -37,7 +37,7 @@ const Home = () => {
   const darkOverlayOpacity = useTransform(
     scrollYProgress,
     [0.24, 0.34],
-    [0.58, 1] // Adjust the second value to control how dark the image gets
+    [0.58, 1]
   );
 
   // Single panel animation (expands from the middle to cover the screen)
@@ -83,18 +83,18 @@ const Home = () => {
       transition={{ duration: 0.6 }}
       className="relative w-full bg-black"
     >
-      <div className="relative  w-full bg-black">
+      <div className="relative w-full bg-black">
         <motion.div
           id="home-section"
           ref={homeRef}
           className="w-full h-[150vh] relative bg-black"
         >
-          <motion.div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center">
-            <motion.h1 className="text-9xl font-black text-white z-20">
+          <motion.div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center px-4">
+            <motion.h1 className="text-5xl md:text-7xl lg:text-9xl font-black text-white z-20 text-center">
               VICIOS
             </motion.h1>
             <motion.h2
-              className="text-7xl font-black text-white"
+              className="text-4xl md:text-5xl lg:text-7xl font-black text-white text-center"
               style={{
                 opacity: ocultosOpacity,
               }}
@@ -105,12 +105,12 @@ const Home = () => {
         </motion.div>
         <div className="relative h-[250vh] w-full bg-black">
           {/* Landing Section */}
-          <motion.div className="sticky top-0 h-screen w-full flex justify-center  bg-cover bg-no-repeat bg-[url('./assets/vicios-hero.jpeg')]">
+          <motion.div className="sticky top-0 h-screen w-full flex justify-center bg-cover bg-no-repeat bg-[url('./assets/vicios-hero.jpeg')] bg-center">
             {/* Glow Overlay */}
             <motion.div
               className="absolute top-0 left-0 w-full h-full glow-overlay"
               style={{
-                opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]), // Optional fade-out on scroll
+                opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]),
               }}
             ></motion.div>
 
@@ -143,29 +143,40 @@ const Home = () => {
               <motion.div
                 className="bg-center bg-cover bg-[url('./assets/cierto-cover.jpeg')]"
                 style={{
-                  opacity: underneathOpacity, // Album cover fade-in
-                  scale: underneathScale, // Album cover zoom-in
-                  width: "30vh",
-                  height: "30vh",
+                  opacity: underneathOpacity,
+                  scale: underneathScale,
+                  width: "60vw",
+                  height: "60vw",
+                  maxWidth: "30vh",
+                  maxHeight: "30vh",
                   boxShadow: "0 0 10px 3px rgba(300, 300, 300, 0.7)",
                 }}
               />
 
               {/* Supporting Text */}
               <motion.div
-                className="text-center text-white"
+                className="text-center text-white mt-8"
                 style={{
                   opacity: singleTextOpacity,
                   translateY: singleTextTranslateY,
                 }}
               >
-                <h2 className="text-2xl font-bold">
+                <h2 className="text-xl md:text-2xl font-bold mb-4">
                   Vicios Ocultos - Lo Cierto
                 </h2>
-                <div className="flex justify-center items-center gap-1">
-                  <MusicButton icon={FaSpotify} href="https://spotify.com" />
-                  <MusicButton icon={FaApple} href="https://spotify.com" />
-                  <MusicButton icon={FaYoutube} href="https://spotify.com" />
+                <div className="flex justify-center items-center gap-2 md:gap-4">
+                  <MusicButton
+                    icon={FaSpotify}
+                    href="https://open.spotify.com/artist/viciososocultos"
+                  />
+                  <MusicButton
+                    icon={FaApple}
+                    href="https://music.apple.com/artist/viciososocultos"
+                  />
+                  <MusicButton
+                    icon={FaYoutube}
+                    href="https://youtube.com/@viciososocultos"
+                  />
                 </div>
               </motion.div>
             </motion.div>
@@ -176,7 +187,7 @@ const Home = () => {
         <ProjectSection ref={projectRef} scrollYProgress={scrollYProgress} />
         <ContactSection ref={connectRef} scrollYProgress={scrollYProgress} />
       </div>
-      <Header
+      <Navigation
         isStoryInView={isStoryInView}
         isConnectInView={isConnectInView}
         isProjectInView={isProjectInView}

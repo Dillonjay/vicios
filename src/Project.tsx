@@ -6,7 +6,6 @@ import viciosOndos from "./assets/vicios-1.jpeg";
 import MusicButton from "./MusicButton";
 import { ImSpinner3 } from "react-icons/im";
 import { FaApple, FaSpotify, FaYoutube } from "react-icons/fa6";
-import LyricsAnimator from "./Lyrics";
 import { FormattedMessage } from "react-intl";
 import { messages } from "./projectMessages";
 
@@ -42,12 +41,12 @@ const FallingText = ({
   const translateX = useTransform(
     scrollYProgress,
     [staggerStart, staggerEnd],
-    [-220, 0]
+    [-110, 0]
   );
 
   return (
     <motion.p
-      className="text-6xl text-white font-bold"
+      className="text-3xl md:text-4xl lg:text-6xl text-white font-bold"
       style={{
         opacity,
         y: translateY,
@@ -63,12 +62,6 @@ interface ProjectSectionProps {
   scrollYProgress: MotionValue<number>;
 }
 
-const letras = [
-  "Lo cierto al final",
-  "Lo cierto no se va",
-  "Let the memories unfold",
-  "For stories to be told",
-];
 const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
   ({ scrollYProgress }, ref) => {
     const [hoveredImage, setHoveredImage] = useState<string | null>(null);
@@ -85,7 +78,7 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
       <div
         id="project-section"
         ref={ref}
-        className="relative p-32 h-[100vh] bg-black overflow-hidden"
+        className="relative p-4 md:p-8 lg:p-32 h-[100vh] bg-black overflow-hidden"
         style={{
           background: `
             linear-gradient(
@@ -102,19 +95,19 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
       >
         <div className="absolute bottom-5 right-0 w-full flex justify-end z-30">
           <motion.div
-            className="text-white text-7xl font-black uppercase tracking-wide"
+            className="text-white text-4xl md:text-5xl lg:text-7xl font-black uppercase tracking-wide pr-4 md:pr-8"
             style={{
               opacity: projectOpacity,
               translateY: projectTranslateY,
             }}
             transition={{ duration: 0.5 }}
           >
-            Our Penis
+            Our Projects
           </motion.div>
         </div>
         {/* Falling Text and Image Row */}
-        <div className="flex justify-between pt-24">
-          <div className="flex flex-col">
+        <div className="flex flex-col md:flex-row justify-between pt-12 md:pt-24">
+          <div className="flex flex-col mb-8 md:mb-0">
             {phrases.map((phrase, index) => (
               <FallingText
                 key={index}
@@ -127,7 +120,7 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
             ))}
           </div>
 
-          <div className="relative w-80 h-80">
+          <div className="relative w-48 h-48 md:w-80 md:h-80 mx-auto md:mx-0">
             {/* Default Image */}
             <motion.img
               src={viciosBack}
@@ -158,56 +151,81 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
         </div>
 
         {/* Horizontal Lines */}
-        <div className="mt-24 sticky top-0">
+        <div className="mt-12 md:mt-24 sticky top-0">
           {/* Lo Cierto */}
           <div
-            className="border-b border-white py-4 cursor-pointer flex justify-between"
+            className="border-b border-white py-3 md:py-4 cursor-pointer flex flex-col md:flex-row justify-between items-center"
             onMouseEnter={() => setHoveredImage(viciosCierto)}
-            onMouseLeave={() => setHoveredImage(null)} // Reset to default
+            onMouseLeave={() => setHoveredImage(null)}
           >
-            <h3 className="text-4xl text-white font-bold">Lo Cierto</h3>
+            <h3 className="text-2xl md:text-3xl lg:text-4xl text-white font-bold mb-2 md:mb-0">
+              Lo Cierto
+            </h3>
 
-            <div className="flex gap-0">
-              <MusicButton icon={FaSpotify} href="https://spotify.com" />
-              <MusicButton icon={FaYoutube} href="https://spotify.com" />
-              <MusicButton icon={FaApple} href="https://spotify.com" />
+            <div className="flex gap-2 md:gap-0">
+              <MusicButton
+                icon={FaSpotify}
+                href="https://open.spotify.com/artist/viciososocultos"
+              />
+              <MusicButton
+                icon={FaYoutube}
+                href="https://youtube.com/@viciososocultos"
+              />
+              <MusicButton
+                icon={FaApple}
+                href="https://music.apple.com/artist/viciososocultos"
+              />
             </div>
           </div>
 
           {/* Ondos */}
           <div
-            className="border-b border-white py-4 cursor-pointer flex justify-between"
+            className="border-b border-white py-3 md:py-4 cursor-pointer flex flex-col md:flex-row justify-between items-center"
             onMouseEnter={() => setHoveredImage(viciosOndos)}
-            onMouseLeave={() => setHoveredImage(null)} // Reset to default
+            onMouseLeave={() => setHoveredImage(null)}
           >
-            <div className="flex items-center gap-3">
-              <h3 className="text-4xl text-white font-bold">
+            <div className="flex items-center gap-3 mb-2 md:mb-0">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl text-white font-bold">
                 <FormattedMessage {...messages.comingSoon} />
               </h3>
               <ImSpinner3
-                className="text-white text-4xl animate-spin"
+                className="text-white text-2xl md:text-3xl lg:text-4xl animate-spin"
                 style={{ animationDuration: "2s" }}
               />
             </div>
-            <div className="flex gap-0">
-              <MusicButton icon={FaSpotify} href="https://spotify.com" />
-              <MusicButton icon={FaYoutube} href="https://spotify.com" />
-              <MusicButton icon={FaApple} href="https://spotify.com" />
+            <div className="flex gap-2 md:gap-0">
+              <MusicButton
+                icon={FaSpotify}
+                href="https://open.spotify.com/artist/viciososocultos"
+              />
+              <MusicButton
+                icon={FaYoutube}
+                href="https://youtube.com/@viciososocultos"
+              />
+              <MusicButton
+                icon={FaApple}
+                href="https://music.apple.com/artist/viciososocultos"
+              />
             </div>
           </div>
         </div>
 
         {hoveredImage && (
-          <motion.div
-            className="relative whitespace-nowrap px-32 mt-24"
-            animate={{ opacity: 1, display: "block" }}
-            initial={{ opacity: 0, display: "none" }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-          >
-            <LyricsAnimator
-              lyrics={hoveredImage === viciosCierto ? letras : []}
-            />
-          </motion.div>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div className="relative max-w-md w-full">
+              <img
+                src={hoveredImage}
+                alt="Album Cover"
+                className="w-full h-auto rounded-lg shadow-lg"
+              />
+              <button
+                className="absolute top-2 right-2 bg-white text-black rounded-full w-8 h-8 flex items-center justify-center"
+                onClick={() => setHoveredImage(null)}
+              >
+                ×
+              </button>
+            </div>
+          </div>
         )}
       </div>
     );
