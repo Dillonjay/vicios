@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useState, useRef } from "react";
 import { motion, useTransform, MotionValue } from "framer-motion";
 import viciosCierto from "./assets/cierto-cover.jpeg";
 import viciosBack from "./assets/vicios-back-cover.png";
@@ -82,7 +82,172 @@ interface ProjectSectionProps {
 
 const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
   ({ scrollYProgress }, ref) => {
-    const [hoveredImage, setHoveredImage] = useState<string | null>(null);
+    const [currentImage, setCurrentImage] = useState<string>(viciosBack);
+    const isAnimating = useRef(false);
+    const imageRef = useRef<HTMLImageElement>(null);
+
+    // Function to handle glitchy image transitions
+    const changeImage = (newImage: string) => {
+      if (currentImage === newImage || isAnimating.current) return;
+
+      isAnimating.current = true;
+
+      // Create a canvas for the glitch effect
+      const img = imageRef.current;
+      if (!img) {
+        setCurrentImage(newImage);
+        isAnimating.current = false;
+        return;
+      }
+
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      if (!context) {
+        setCurrentImage(newImage);
+        isAnimating.current = false;
+        return;
+      }
+
+      // Set canvas dimensions
+      const rect = img.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
+      // Position the canvas over the image
+      canvas.style.position = "absolute";
+      canvas.style.top = "0";
+      canvas.style.left = "0";
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      canvas.style.zIndex = "10";
+      img.parentNode?.appendChild(canvas);
+
+      // Draw initial image
+      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      // Load the new image
+      const nextImg = new Image();
+      nextImg.crossOrigin = "anonymous";
+      nextImg.src = newImage;
+      nextImg.onload = () => {
+        let step = 0;
+        const totalSteps = 12;
+
+        const glitchEffect = () => {
+          if (step >= totalSteps) {
+            // Clean up and finish
+            if (canvas.parentNode) {
+              canvas.parentNode.removeChild(canvas);
+            }
+            setCurrentImage(newImage);
+            isAnimating.current = false;
+            return;
+          }
+
+          // Clear canvas
+          context.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Draw base image
+          const baseImg = step < totalSteps / 2 ? img : nextImg;
+          context.drawImage(baseImg, 0, 0, canvas.width, canvas.height);
+
+          // Apply glitch effects
+          const sliceHeight = canvas.height / 20;
+          const numSlices = Math.floor(canvas.height / sliceHeight);
+
+          for (let i = 0; i < numSlices; i++) {
+            // Random displacement
+            const displacement = Math.random() * 20 - 10;
+            const y = i * sliceHeight;
+
+            // Randomize which slices get glitched
+            if (Math.random() > 0.7) {
+              // Draw slices with random offsets
+              context.drawImage(
+                step < totalSteps / 2 ? nextImg : img,
+                0,
+                y,
+                canvas.width,
+                sliceHeight,
+                displacement,
+                y,
+                canvas.width,
+                sliceHeight
+              );
+            }
+
+            // Add scanlines
+            if (Math.random() > 0.8) {
+              context.fillStyle = "rgba(255, 255, 255, 0.1)";
+              context.fillRect(
+                0,
+                y + Math.random() * sliceHeight,
+                canvas.width,
+                1
+              );
+            }
+          }
+
+          // Add color shift occasionally
+          if (step % 2 === 0) {
+            context.globalCompositeOperation = "screen";
+            context.fillStyle = `rgba(${Math.random() * 255}, ${
+              Math.random() * 255
+            }, ${Math.random() * 255}, 0.1)`;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.globalCompositeOperation = "source-over";
+          }
+
+          // Add pixelation effect
+          if (step % 3 === 0) {
+            const pixelSize = Math.max(2, Math.floor(Math.random() * 10));
+            const tempCanvas = document.createElement("canvas");
+            const tempContext = tempCanvas.getContext("2d");
+            if (tempContext) {
+              tempCanvas.width = canvas.width / pixelSize;
+              tempCanvas.height = canvas.height / pixelSize;
+
+              // Draw at a lower resolution
+              tempContext.drawImage(
+                canvas,
+                0,
+                0,
+                tempCanvas.width,
+                tempCanvas.height
+              );
+
+              // Scale back up with nearest-neighbor interpolation
+              context.imageSmoothingEnabled = false;
+              context.drawImage(
+                tempCanvas,
+                0,
+                0,
+                tempCanvas.width,
+                tempCanvas.height,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+              );
+            }
+          }
+
+          step++;
+          setTimeout(glitchEffect, 50);
+        };
+
+        glitchEffect();
+      };
+
+      // Fallback if image loading fails
+      nextImg.onerror = () => {
+        if (canvas.parentNode) {
+          canvas.parentNode.removeChild(canvas);
+        }
+        setCurrentImage(newImage);
+        isAnimating.current = false;
+      };
+    };
 
     const phrases = ["The night isn't over", "Until I'm", "Far from", "Sober"];
     const projectOpacity = useTransform(scrollYProgress, [0.9, 0.95], [1, 0]);
@@ -143,31 +308,11 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
             </div>
 
             <div className="relative w-48 h-48 md:w-80 md:h-80 mx-auto md:mx-0">
-              {/* Default Image */}
-              <motion.img
-                src={viciosBack}
-                alt="Default"
-                className="absolute w-full h-full object-cover"
-                animate={{ opacity: hoveredImage === null ? 1 : 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-              />
-              {/* Lo Cierto Image */}
-              <motion.img
-                src={viciosCierto}
-                alt="Cierto Cover"
-                className="absolute w-full h-full object-cover"
-                animate={{ opacity: hoveredImage === viciosCierto ? 1 : 0 }}
-                initial={{ opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-              />
-              {/* Ondos Image */}
-              <motion.img
-                src={viciosOndos}
-                alt="Ondos Cover"
-                className="absolute w-full h-full object-cover"
-                animate={{ opacity: hoveredImage === viciosOndos ? 1 : 0 }}
-                initial={{ opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
+              <img
+                ref={imageRef}
+                src={currentImage}
+                alt="Album Cover"
+                className="w-full h-full object-cover transition-all duration-300"
               />
             </div>
           </div>
@@ -176,79 +321,77 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
           <div className="mt-12 md:mt-24 sticky top-0">
             {/* Lo Cierto */}
             <div
-              className="border-b border-white py-3 md:py-4 cursor-pointer flex flex-col md:flex-row justify-between items-center"
-              onMouseEnter={() => setHoveredImage(viciosCierto)}
-              onMouseLeave={() => setHoveredImage(null)}
+              className="relative cursor-pointer border-b border-white py-3 md:py-4"
+              onMouseEnter={() => changeImage(viciosCierto)}
+              onMouseLeave={() => changeImage(viciosBack)}
             >
-              <h3 className="text-2xl md:text-3xl lg:text-4xl text-white font-bold mb-2 md:mb-0">
-                Lo Cierto
-              </h3>
+              <div className="flex flex-col md:flex-row justify-between items-center">
+                <h3 className="text-2xl md:text-3xl lg:text-4xl text-white font-bold mb-2 md:mb-0">
+                  Lo Cierto
+                </h3>
 
-              <div className="flex gap-2 md:gap-0">
-                <MusicButton
-                  icon={FaSpotify}
-                  href="https://open.spotify.com/artist/viciososocultos"
-                />
-                <MusicButton
-                  icon={FaYoutube}
-                  href="https://youtube.com/@viciososocultos"
-                />
-                <MusicButton
-                  icon={FaApple}
-                  href="https://music.apple.com/artist/viciososocultos"
-                />
+                <div className="flex gap-2 md:gap-0">
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <MusicButton
+                      icon={FaSpotify}
+                      href="https://open.spotify.com/artist/viciososocultos"
+                    />
+                  </div>
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <MusicButton
+                      icon={FaYoutube}
+                      href="https://youtube.com/@viciososocultos"
+                    />
+                  </div>
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <MusicButton
+                      icon={FaApple}
+                      href="https://music.apple.com/artist/viciososocultos"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Ondos */}
             <div
-              className="border-b border-white py-3 md:py-4 cursor-pointer flex flex-col md:flex-row justify-between items-center"
-              onMouseEnter={() => setHoveredImage(viciosOndos)}
-              onMouseLeave={() => setHoveredImage(null)}
+              className="relative cursor-pointer border-b border-white py-3 md:py-4"
+              onMouseEnter={() => changeImage(viciosOndos)}
+              onMouseLeave={() => changeImage(viciosBack)}
             >
-              <div className="flex items-center gap-3 mb-2 md:mb-0">
-                <h3 className="text-2xl md:text-3xl lg:text-4xl text-white font-bold">
-                  <FormattedMessage {...messages.comingSoon} />
-                </h3>
-                <ImSpinner3
-                  className="text-white text-2xl md:text-3xl lg:text-4xl animate-spin"
-                  style={{ animationDuration: "2s" }}
-                />
-              </div>
-              <div className="flex gap-2 md:gap-0">
-                <MusicButton
-                  icon={FaSpotify}
-                  href="https://open.spotify.com/artist/viciososocultos"
-                />
-                <MusicButton
-                  icon={FaYoutube}
-                  href="https://youtube.com/@viciososocultos"
-                />
-                <MusicButton
-                  icon={FaApple}
-                  href="https://music.apple.com/artist/viciososocultos"
-                />
+              <div className="flex flex-col md:flex-row justify-between items-center">
+                <div className="flex items-center gap-3 mb-2 md:mb-0">
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl text-white font-bold">
+                    <FormattedMessage {...messages.comingSoon} />
+                  </h3>
+                  <ImSpinner3
+                    className="text-white text-2xl md:text-3xl lg:text-4xl animate-spin"
+                    style={{ animationDuration: "2s" }}
+                  />
+                </div>
+                <div className="flex gap-2 md:gap-0">
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <MusicButton
+                      icon={FaSpotify}
+                      href="https://open.spotify.com/artist/viciososocultos"
+                    />
+                  </div>
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <MusicButton
+                      icon={FaYoutube}
+                      href="https://youtube.com/@viciososocultos"
+                    />
+                  </div>
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <MusicButton
+                      icon={FaApple}
+                      href="https://music.apple.com/artist/viciososocultos"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-
-          {hoveredImage && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-              <div className="relative max-w-md w-full">
-                <img
-                  src={hoveredImage}
-                  alt="Album Cover"
-                  className="w-full h-auto rounded-lg shadow-lg"
-                />
-                <button
-                  className="absolute top-2 right-2 bg-white text-black rounded-full w-8 h-8 flex items-center justify-center"
-                  onClick={() => setHoveredImage(null)}
-                >
-                  ×
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     );
