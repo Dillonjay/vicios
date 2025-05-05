@@ -7,6 +7,7 @@ import ContactSection from "./Connect";
 
 import { FaApple, FaYoutube, FaSpotify } from "react-icons/fa6";
 import { MusicButton } from "./MusicButton";
+import complacentCover from "./assets/complacent-lust-cover.jpeg";
 
 const Home = () => {
   const { scrollYProgress } = useScroll();
@@ -122,15 +123,16 @@ const Home = () => {
             >
               {/* Album Cover */}
               <motion.div
-                className="bg-center bg-cover bg-[url('./assets/cierto-cover.jpeg')]"
+                className="bg-center bg-cover"
                 style={{
+                  backgroundImage: `url(${complacentCover})`,
                   opacity: underneathOpacity,
                   scale: underneathScale,
                   width: "60vw",
                   height: "60vw",
                   maxWidth: "30vh",
                   maxHeight: "30vh",
-                  boxShadow: "0 0 10px 3px rgba(300, 300, 300, 0.7)",
+                  boxShadow: "0 0 10px 3px rgba(300, 300, 300)",
                 }}
               />
 
@@ -143,7 +145,7 @@ const Home = () => {
                 }}
               >
                 <h2 className="text-xl md:text-2xl font-bold mb-4">
-                  Vicios Ocultos - Lo Cierto
+                  Vicios Ocultos - Complacent Lust
                 </h2>
                 <div className="flex justify-center items-center gap-2 md:gap-4">
                   <MusicButton
