@@ -1,14 +1,9 @@
 import { motion, MotionValue, useTransform } from "framer-motion";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaSpotify,
-  FaYoutube,
-  FaApple,
-} from "react-icons/fa6";
+import { FaInstagram, FaSpotify, FaYoutube, FaApple } from "react-icons/fa6";
 import { useState, useEffect, forwardRef } from "react";
 import { messages } from "./connectMessages";
 import { FormattedMessage } from "react-intl";
+import { SPOTIFY_URL, INSTAGRAM, YOUTUBE, APPLE_MUSIC } from "./constants";
 
 // Custom hook to track mouse position
 const useMousePosition = () => {
@@ -105,7 +100,7 @@ const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
               }}
             >
               <a
-                href="https://open.spotify.com/artist/viciososocultos"
+                href={SPOTIFY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-green-500 transition-colors duration-300"
@@ -113,7 +108,7 @@ const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
                 <FaSpotify size="2em" className="md:text-3xl" />
               </a>
               <a
-                href="https://instagram.com/viciososocultos"
+                href={INSTAGRAM}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-pink-500 transition-colors duration-300"
@@ -121,7 +116,7 @@ const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
                 <FaInstagram size="2em" className="md:text-3xl" />
               </a>
               <a
-                href="https://youtube.com/@viciososocultos"
+                href={YOUTUBE.vicios}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-red-500 transition-colors duration-300"
@@ -129,20 +124,12 @@ const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
                 <FaYoutube size="2em" className="md:text-3xl" />
               </a>
               <a
-                href="https://music.apple.com/artist/viciososocultos"
+                href={APPLE_MUSIC.vicios}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-gray-300 transition-colors duration-300"
               >
                 <FaApple size="2em" className="md:text-3xl" />
-              </a>
-              <a
-                href="https://facebook.com/viciososocultos"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-blue-500 transition-colors duration-300"
-              >
-                <FaFacebook size="2em" className="md:text-3xl" />
               </a>
             </motion.div>
           </div>
@@ -183,7 +170,7 @@ const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
             }}
           >
             <a
-              href="https://open.spotify.com/artist/viciososocultos"
+              href={SPOTIFY_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-green-500 transition-colors duration-300"
@@ -191,7 +178,7 @@ const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
               <FaSpotify size="2em" className="md:text-3xl" />
             </a>
             <a
-              href="https://instagram.com/viciososocultos"
+              href={INSTAGRAM}
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-pink-500 transition-colors duration-300"
@@ -199,7 +186,7 @@ const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
               <FaInstagram size="2em" className="md:text-3xl" />
             </a>
             <a
-              href="https://youtube.com/@viciososocultos"
+              href={YOUTUBE.vicios}
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-red-500 transition-colors duration-300"
@@ -207,20 +194,12 @@ const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
               <FaYoutube size="2em" className="md:text-3xl" />
             </a>
             <a
-              href="https://music.apple.com/artist/viciososocultos"
+              href={APPLE_MUSIC.vicios}
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-gray-300 transition-colors duration-300"
             >
               <FaApple size="2em" className="md:text-3xl" />
-            </a>
-            <a
-              href="https://facebook.com/viciososocultos"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-blue-500 transition-colors duration-300"
-            >
-              <FaFacebook size="2em" className="md:text-3xl" />
             </a>
           </motion.div>
         </div>

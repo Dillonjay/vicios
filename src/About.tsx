@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import { motion, MotionValue, useTransform } from "framer-motion";
+import { StickySection } from "./components/StickySection";
 
 import vicios1 from "./assets/vicios-1.jpeg";
 import vicios3 from "./assets/vicios-3.jpeg";
@@ -92,6 +93,8 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
       [0.73, 0.84],
       [1, 0]
     );
+
+    // Title animations
     const storyOpacity = useTransform(scrollYProgress, [0.73, 0.78], [1, 0]);
     const storyTranslateY = useTransform(
       scrollYProgress,
@@ -100,36 +103,30 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
     );
 
     return (
-      <div className="relative h-[220vh]">
-        <div className="sticky top-0 h-screen max-w-[100rem] mx-auto">
-          <motion.div
-            className="absolute bottom-2 border-b-4 border-[#4b4b4a] w-full flex justify-end z-30 px-[5em]"
-            style={{
-              opacity: storyOpacity,
-              translateY: storyTranslateY,
-            }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="text-white text-7xl font-black uppercase tracking-wide">
-              <FormattedMessage {...messages.title} />
-            </div>
-          </motion.div>
+      <motion.div
+        className="relative h-[220vh]"
+        style={{
+          opacity: opacity,
+          backgroundImage: `
+            radial-gradient(
+            circle,
+            #0A0A0A 0%,
+            #000000 100%
+        )`,
+        }}
+      >
+        <StickySection
+          ref={ref}
+          title={messages.title}
+          titleOpacity={storyOpacity}
+          titleTranslateY={storyTranslateY}
+        >
           <motion.div
             id="story-section"
-            ref={ref}
             className="relative h-screen w-full flex flex-col items-center justify-center px-[5em] bg-center bg-cover bg-no-repeat overflow-x-hidden"
-            style={{
-              opacity: opacity,
-              backgroundImage: `
-                  radial-gradient(
-                  circle,
-                  #0A0A0A 0%,
-                  #000000 100%
-              )`,
-            }}
           >
             {/* Image Grid */}
-            <div className=" grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 relative z-20">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 relative z-20">
               <motion.div
                 className="group relative overflow-hidden shadow-lg row-span-2"
                 style={{
@@ -250,8 +247,8 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
               </motion.div>
             </div>
           </motion.div>
-        </div>
-      </div>
+        </StickySection>
+      </motion.div>
     );
   }
 );

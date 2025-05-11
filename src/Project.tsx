@@ -2,13 +2,15 @@ import { forwardRef, useState, useRef, useEffect } from "react";
 import { motion, useTransform, MotionValue } from "framer-motion";
 import viciosCierto from "./assets/cierto-cover.jpeg";
 import viciosBack from "./assets/vicios-back-cover.png";
-import viciosOndos from "./assets/vicios-1.jpeg";
 import viciosComplacent from "./assets/complacent-lust-cover.jpeg";
 import { MusicButton } from "./MusicButton";
 import { ImSpinner3 } from "react-icons/im";
 import { FaApple, FaSpotify, FaYoutube } from "react-icons/fa6";
 import { FormattedMessage } from "react-intl";
 import { messages } from "./projectMessages";
+import { SPOTIFY, YOUTUBE, APPLE_MUSIC } from "./constants";
+import { SongItem } from "./components/SongItem/SongItem";
+import { StickySection } from "./components/StickySection";
 
 interface FallingTextProps {
   phrase: string;
@@ -47,7 +49,7 @@ const FallingText = ({
 
   return (
     <motion.p
-      className="text-3xl md:text-4xl lg:text-6xl text-white font-bold"
+      className="text-3xl md:text-4xl lg:text-6xl text-white font-bold mb-2"
       style={{
         opacity,
         y: translateY,
@@ -70,6 +72,10 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const transitionTimerRef = useRef<number | null>(null);
     const [isTransitioning, setIsTransitioning] = useState(false);
+
+    // Title animations
+    const titleOpacity = useTransform(scrollYProgress, [0.95, 1.0], [1, 0]);
+    const titleTranslateY = useTransform(scrollYProgress, [0.9, 0.92], [0, 75]);
 
     // Clean up function for animations
     const cleanupTransition = () => {
@@ -270,17 +276,16 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
       };
     };
 
-    const phrases = ["The night isn't over", "Until I'm", "Far from", "Sober"];
-    const projectOpacity = useTransform(scrollYProgress, [0.9, 0.95], [1, 0]);
-    const projectTranslateY = useTransform(
-      scrollYProgress,
-      [0.9, 0.95],
-      [0, 65]
-    );
+    const phrases = [
+      "Tocando en\u00A0Texas",
+      "Mixing in\u00A0Mexico",
+      "Rolas en\u00A0queue",
+      "Coming soon",
+    ];
 
     return (
       <div
-        className="relative h-[100vh] "
+        className="relative h-[180vh]"
         style={{
           background: `
         linear-gradient(
@@ -295,162 +300,153 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
         )`,
         }}
       >
-        <div
-          id="project-section"
+        <StickySection
           ref={ref}
-          className="max-w-[100rem] mx-auto px-[5em]"
+          title={messages.title}
+          titleOpacity={titleOpacity}
+          titleTranslateY={titleTranslateY}
         >
-          <motion.div
-            className="absolute right-0 w-full flex justify-end z-30 bottom-2 border-b-4 border-[#4b4b4a] px-[5em]"
-            style={{
-              opacity: projectOpacity,
-              translateY: projectTranslateY,
-            }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="text-white text-4xl md:text-5xl lg:text-7xl font-black uppercase tracking-wide">
-              <FormattedMessage {...messages.title} />
-            </div>
-          </motion.div>
+          <div className="relative h-screen w-full flex flex-col px-4 md:px-[5em]">
+            {/* Falling Text and Image Row */}
+            <div className="flex flex-col md:flex-row justify-between pt-28 md:pt-24">
+              <div className="flex flex-col mb-8 md:mb-0">
+                {phrases.map((phrase, index) => (
+                  <FallingText
+                    key={index}
+                    phrase={phrase}
+                    index={index}
+                    scrollYProgress={scrollYProgress}
+                    start={0.75}
+                    end={0.78}
+                  />
+                ))}
+              </div>
 
-          {/* Falling Text and Image Row */}
-          <div className="flex flex-col md:flex-row justify-between pt-12 md:pt-24">
-            <div className="flex flex-col mb-8 md:mb-0">
-              {phrases.map((phrase, index) => (
-                <FallingText
-                  key={index}
-                  phrase={phrase}
-                  index={index}
-                  scrollYProgress={scrollYProgress}
-                  start={0.75}
-                  end={0.78}
+              <div className="relative w-full h-full md:w-80 md:h-80 mx-auto md:mx-0">
+                <img
+                  ref={imageRef}
+                  src={currentImage}
+                  alt="Album Cover"
+                  className="w-full h-full object-cover transition-all duration-300"
+                  style={{
+                    transitionProperty: "opacity, transform",
+                    transitionDuration: "0.3s",
+                    transitionTimingFunction: "ease-in-out",
+                  }}
                 />
-              ))}
+              </div>
             </div>
 
-            <div className="relative w-48 h-48 md:w-80 md:h-80 mx-auto md:mx-0">
-              <img
-                ref={imageRef}
-                src={currentImage}
-                alt="Album Cover"
-                className="w-full h-full object-cover transition-all duration-300"
-                style={{
-                  transitionProperty: "opacity, transform",
-                  transitionDuration: "0.3s",
-                  transitionTimingFunction: "ease-in-out",
-                }}
+            {/* Song Items */}
+            <div className="mt-12 md:mt-24">
+              <SongItem
+                title="Complacent Lust"
+                className="py-3 md:py-4 relative"
+                onMouseEnter={() => changeImage(viciosComplacent)}
+                onMouseLeave={() => changeImage(viciosBack)}
+                rightContent={
+                  <div className="flex gap-2 md:gap-0">
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <MusicButton icon={FaSpotify} href={SPOTIFY.complacent} />
+                    </div>
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <MusicButton icon={FaYoutube} href={YOUTUBE.complacent} />
+                    </div>
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <MusicButton
+                        icon={FaApple}
+                        href={APPLE_MUSIC.complacent}
+                      />
+                    </div>
+                  </div>
+                }
+              />
+
+              <SongItem
+                title="Lo Cierto"
+                className="py-3 md:py-4 relative"
+                onMouseEnter={() => changeImage(viciosCierto)}
+                onMouseLeave={() => changeImage(viciosBack)}
+                rightContent={
+                  <div className="flex gap-2 md:gap-0">
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <MusicButton icon={FaSpotify} href={SPOTIFY.cierto} />
+                    </div>
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <MusicButton icon={FaYoutube} href={YOUTUBE.cierto} />
+                    </div>
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <MusicButton icon={FaApple} href={APPLE_MUSIC.cierto} />
+                    </div>
+                  </div>
+                }
+              />
+
+              <SongItem
+                title={
+                  <div className="flex items-center gap-3 relative overflow-hidden rounded-lg px-3">
+                    <span className="opacity-70" style={{ color: "#5a5a5a" }}>
+                      <FormattedMessage {...messages.comingSoon} />
+                    </span>
+                    <ImSpinner3
+                      className="text-white text-2xl md:text-3xl animate-spin opacity-70"
+                      style={{
+                        animationDuration: "2s",
+                        color: "#5a5a5a",
+                      }}
+                    />
+                  </div>
+                }
+                className="py-3 md:py-4 relative overflow-hidden"
+                rightContent={
+                  <div className="flex gap-2 md:gap-0">
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <MusicButton
+                        icon={FaSpotify}
+                        href={SPOTIFY.vicios}
+                        disabled
+                      />
+                    </div>
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <MusicButton
+                        icon={FaYoutube}
+                        href={YOUTUBE.vicios}
+                        disabled
+                      />
+                    </div>
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <MusicButton
+                        icon={FaApple}
+                        href={APPLE_MUSIC.vicios}
+                        disabled
+                      />
+                    </div>
+                  </div>
+                }
+                disableHover={true}
+                customOverlay={
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"
+                    style={{
+                      opacity: 0.15,
+                      zIndex: 1,
+                      width: "200%",
+                      left: "-50%",
+                    }}
+                    animate={{
+                      x: ["100%", "-100%"],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 2.5,
+                      ease: "linear",
+                    }}
+                  />
+                }
               />
             </div>
           </div>
-
-          {/* Horizontal Lines */}
-          <div className="mt-12 md:mt-24 sticky top-0">
-            {/* Lo Cierto */}
-            <div
-              className="relative cursor-pointer border-b border-white py-3 md:py-4"
-              onMouseEnter={() => changeImage(viciosCierto)}
-              onMouseLeave={() => changeImage(viciosBack)}
-            >
-              <div className="flex flex-col md:flex-row justify-between items-center">
-                <h3 className="text-2xl md:text-3xl lg:text-4xl text-white font-bold mb-2 md:mb-0">
-                  Lo Cierto
-                </h3>
-
-                <div className="flex gap-2 md:gap-0">
-                  <div onClick={(e) => e.stopPropagation()}>
-                    <MusicButton
-                      icon={FaSpotify}
-                      href="https://open.spotify.com/artist/viciososocultos"
-                    />
-                  </div>
-                  <div onClick={(e) => e.stopPropagation()}>
-                    <MusicButton
-                      icon={FaYoutube}
-                      href="https://youtube.com/@viciososocultos"
-                    />
-                  </div>
-                  <div onClick={(e) => e.stopPropagation()}>
-                    <MusicButton
-                      icon={FaApple}
-                      href="https://music.apple.com/artist/viciososocultos"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              className="relative cursor-pointer border-b border-white py-3 md:py-4"
-              onMouseEnter={() => changeImage(viciosComplacent)}
-              onMouseLeave={() => changeImage(viciosBack)}
-            >
-              <div className="flex flex-col md:flex-row justify-between items-center">
-                <h3 className="text-2xl md:text-3xl lg:text-4xl text-white font-bold mb-2 md:mb-0">
-                  Complacent Lust
-                </h3>
-
-                <div className="flex gap-2 md:gap-0">
-                  <div onClick={(e) => e.stopPropagation()}>
-                    <MusicButton
-                      icon={FaSpotify}
-                      href="https://open.spotify.com/artist/viciososocultos"
-                    />
-                  </div>
-                  <div onClick={(e) => e.stopPropagation()}>
-                    <MusicButton
-                      icon={FaYoutube}
-                      href="https://youtube.com/@viciososocultos"
-                    />
-                  </div>
-                  <div onClick={(e) => e.stopPropagation()}>
-                    <MusicButton
-                      icon={FaApple}
-                      href="https://music.apple.com/artist/viciososocultos"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              className="relative cursor-pointer border-b border-white py-3 md:py-4"
-              onMouseEnter={() => changeImage(viciosOndos)}
-              onMouseLeave={() => changeImage(viciosBack)}
-            >
-              <div className="flex flex-col md:flex-row justify-between items-center">
-                <div className="flex items-center gap-3 mb-2 md:mb-0">
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl text-white font-bold">
-                    <FormattedMessage {...messages.comingSoon} />
-                  </h3>
-                  <ImSpinner3
-                    className="text-white text-2xl md:text-3xl lg:text-4xl animate-spin"
-                    style={{ animationDuration: "2s" }}
-                  />
-                </div>
-                <div className="flex gap-2 md:gap-0">
-                  <div onClick={(e) => e.stopPropagation()}>
-                    <MusicButton
-                      icon={FaSpotify}
-                      href="https://open.spotify.com/artist/viciososocultos"
-                    />
-                  </div>
-                  <div onClick={(e) => e.stopPropagation()}>
-                    <MusicButton
-                      icon={FaYoutube}
-                      href="https://youtube.com/@viciososocultos"
-                    />
-                  </div>
-                  <div onClick={(e) => e.stopPropagation()}>
-                    <MusicButton
-                      icon={FaApple}
-                      href="https://music.apple.com/artist/viciososocultos"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </StickySection>
       </div>
     );
   }
