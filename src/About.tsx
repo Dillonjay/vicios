@@ -2,10 +2,10 @@ import { forwardRef } from "react";
 import { motion, MotionValue, useTransform } from "framer-motion";
 import { StickySection } from "./components/StickySection";
 
-import vicios1 from "./assets/vicios-1.jpeg";
-import vicios3 from "./assets/vicios-3.jpeg";
-import vicios4 from "./assets/vicios-4.jpeg";
-import vicios5 from "./assets/vicios-5.jpeg";
+import vicios1 from "/assets/vicios-1.jpeg";
+import vicios3 from "/assets/vicios-3.jpeg";
+import vicios4 from "/assets/vicios-4.jpeg";
+import vicios5 from "/assets/vicios-5.jpeg";
 import { FormattedMessage } from "react-intl";
 import { messages } from "./aboutMessages";
 

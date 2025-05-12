@@ -1,8 +1,8 @@
 import { forwardRef, useState, useRef, useEffect } from "react";
 import { motion, useTransform, MotionValue } from "framer-motion";
-import viciosCierto from "./assets/cierto-cover.jpeg";
-import viciosBack from "./assets/vicios-back-cover.png";
-import viciosComplacent from "./assets/complacent-lust-cover.jpeg";
+import viciosCierto from "/assets/cierto-cover.jpeg";
+import viciosBack from "/assets/vicios-back-cover.png";
+import viciosComplacent from "/assets/complacent-lust-cover.jpeg";
 import { MusicButton } from "./MusicButton";
 import { ImSpinner3 } from "react-icons/im";
 import { FaApple, FaSpotify, FaYoutube } from "react-icons/fa6";

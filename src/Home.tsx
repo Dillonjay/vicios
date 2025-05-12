@@ -7,7 +7,7 @@ import ContactSection from "./Connect";
 
 import { FaApple, FaYoutube, FaSpotify } from "react-icons/fa6";
 import { MusicButton } from "./MusicButton";
-import complacentCover from "./assets/complacent-lust-cover.jpeg";
+import complacentCover from "/assets/complacent-lust-cover.jpeg";
 import { SPOTIFY, YOUTUBE, APPLE_MUSIC } from "./constants";
 
 const Home = () => {
@@ -114,7 +114,7 @@ const Home = () => {
         </motion.div>
         <div className="relative h-[250vh] w-full bg-black">
           {/* Landing Section */}
-          <motion.div className="sticky top-0 h-screen w-full flex justify-center bg-cover bg-no-repeat bg-[url('./assets/vicios-hero.jpeg')] bg-center">
+          <motion.div className="sticky top-0 h-screen w-full flex justify-center bg-cover bg-no-repeat bg-[url('/assets/vicios-hero.jpeg')] bg-center">
             {/* Glow Overlay */}
             <motion.div
               className="absolute top-0 left-0 w-full h-full glow-overlay"
