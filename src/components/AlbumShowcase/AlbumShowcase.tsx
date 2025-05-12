@@ -19,50 +19,54 @@ export const AlbumShowcase = ({
   // Dark overlay of "hero open up image"
   const darkOverlayOpacity = useTransform(
     scrollYProgress,
-    [0.24, 0.34],
+    [0.195, 0.34],
     [0.58, 1]
   );
 
   // Single panel animation (expands from the middle to cover the screen)
   const panelWidth = useTransform(
     scrollYProgress,
-    [0.21, 0.34],
+    [0.165, 0.34],
     ["0%", "100%"]
   );
 
-  const underneathOpacity = useTransform(scrollYProgress, [0.24, 0.34], [0, 1]);
+  const underneathOpacity = useTransform(
+    scrollYProgress,
+    [0.195, 0.34],
+    [0, 1]
+  );
 
   // Initial scale for the container (stops at 34%)
-  const initialScale = useTransform(scrollYProgress, [0.24, 0.34], [0.7, 1.3]);
+  const initialScale = useTransform(scrollYProgress, [0.195, 0.34], [0.7, 1.3]);
 
   // Scale for inner content that starts at 34% when shadow fades
-  const innerScale = useTransform(scrollYProgress, [0.34, 0.4], [1, 1.12]);
+  const innerScale = useTransform(scrollYProgress, [0.34, 0.45], [1, 1.12]);
 
   // 3D perspective transform for the album cover
   const coverRotateX = useTransform(
     scrollYProgress,
-    [0.2, 0.28],
+    [0.165, 0.245],
     ["5deg", "0deg"]
   );
 
   const coverDepth = useTransform(
     scrollYProgress,
-    [0.22, 0.28],
+    [0.18, 0.245],
     ["-15px", "0px"]
   );
 
   // The spotify piece that will just have links - synchronized with inner image zoom
-  const singleTextOpacity = useTransform(scrollYProgress, [0.34, 0.4], [0, 1]);
+  const singleTextOpacity = useTransform(scrollYProgress, [0.34, 0.45], [0, 1]);
   const singleTextTranslateY = useTransform(
     scrollYProgress,
-    [0.34, 0.4],
+    [0.34, 0.45],
     [120, 90]
   );
 
   // Shadow transition with just three states: intense, less intense, then none
   const coverShadow = useTransform(
     scrollYProgress,
-    [0.24, 0.34, 0.37, 0.4],
+    [0.195, 0.34, 0.42, 0.45],
     [
       "inset 0 0 25px 10px rgba(0, 0, 0, 0.8), inset 0 0 8px 2px rgba(255, 255, 255, 0.15)",
       "inset 0 0 25px 10px rgba(0, 0, 0, 0.8), inset 0 0 8px 2px rgba(255, 255, 255, 0.15)",
@@ -71,14 +75,26 @@ export const AlbumShowcase = ({
     ]
   );
 
+  // Extended visibility - stays fully visible longer
+  const componentVisibility = useTransform(
+    scrollYProgress,
+    [0.45, 0.55],
+    [1, 0]
+  );
+
   return (
-    <div className="relative h-[250vh] w-full bg-black">
-      <motion.div className="sticky top-0 h-screen w-full flex justify-center bg-cover bg-no-repeat bg-[url('/assets/vicios-hero.jpeg')] bg-center">
+    <div className="relative h-[350vh] w-full bg-black">
+      <motion.div
+        className="sticky top-0 h-screen w-full flex justify-center bg-cover bg-no-repeat bg-[url('/assets/vicios-hero.jpeg')] bg-center"
+        style={{
+          opacity: componentVisibility,
+        }}
+      >
         {/* Glow Overlay */}
         <motion.div
           className="absolute top-0 left-0 w-full h-full glow-overlay"
           style={{
-            opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]),
+            opacity: useTransform(scrollYProgress, [0, 0.165], [1, 0]),
           }}
         ></motion.div>
 
