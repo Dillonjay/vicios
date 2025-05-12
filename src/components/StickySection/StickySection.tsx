@@ -1,4 +1,4 @@
-import React, { ReactNode, forwardRef } from "react";
+import { ReactNode, forwardRef } from "react";
 import { motion, MotionValue } from "framer-motion";
 import { FormattedMessage } from "react-intl";
 

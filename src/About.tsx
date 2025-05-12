@@ -16,7 +16,7 @@ interface AboutSectionProps {
 const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
   ({ scrollYProgress }, ref) => {
     // Maybe this is just an overlay.
-    const opacity = useTransform(scrollYProgress, [0.468, 0.53], [0, 1]);
+    const opacity = useTransform(scrollYProgress, [0.4, 0.53], [0, 1]);
 
     // Image animations
     const slideInFromLeft = useTransform(
@@ -79,12 +79,12 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
     );
     const slidingPanelTranslateY = useTransform(
       scrollYProgress,
-      [0.55, 0.7],
+      [0.59, 0.69],
       [150, 0]
     );
     const slidingPanelTranslateX = useTransform(
       scrollYProgress,
-      [0.73, 0.84],
+      [0.7, 0.8],
       [0, 750]
     );
 
@@ -104,7 +104,7 @@ const AboutSection = forwardRef<HTMLDivElement, AboutSectionProps>(
 
     return (
       <motion.div
-        className="relative h-[220vh]"
+        className="relative h-[350vh]"
         style={{
           opacity: opacity,
           backgroundImage: `

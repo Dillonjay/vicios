@@ -285,6 +285,7 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
 
     return (
       <div
+        id="project-section"
         className="relative h-[180vh]"
         style={{
           background: `

@@ -49,7 +49,7 @@ const ConnectSection = forwardRef<HTMLDivElement, ConnectSectionProps>(
       <div
         id="connect-section"
         ref={ref}
-        className="relative h-screen w-full bg-black overflow-hidden max-w-[100rem] mx-auto"
+        className="relative h-screen w-full bg-black overflow-hidden  mx-auto"
       >
         {/* Top Layer: White text visible by default */}
         <motion.div
