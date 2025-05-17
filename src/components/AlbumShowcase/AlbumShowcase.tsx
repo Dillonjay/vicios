@@ -3,6 +3,9 @@ import { FaApple, FaYoutube, FaSpotify } from "react-icons/fa6";
 import { MusicButton } from "../../MusicButton";
 import { SPOTIFY, YOUTUBE, APPLE_MUSIC } from "../../constants";
 
+// Import easing functions from framer-motion
+import { cubicBezier } from "framer-motion";
+
 interface AlbumShowcaseProps {
   scrollYProgress: MotionValue<number>;
   albumCover: string;
@@ -16,6 +19,9 @@ export const AlbumShowcase = ({
   albumTitle,
   artistName,
 }: AlbumShowcaseProps) => {
+  // Custom easing curve for smoother transitions
+  const smoothEasing = cubicBezier(0.32, 0.72, 0.29, 0.99);
+
   // Dark overlay of "hero open up image"
   const darkOverlayOpacity = useTransform(
     scrollYProgress,
@@ -32,12 +38,17 @@ export const AlbumShowcase = ({
 
   const underneathOpacity = useTransform(
     scrollYProgress,
-    [0.191, 0.34],
+    [0.179, 0.34],
     [0, 1]
   );
 
   // Initial scale for the container (stops at 34%)
-  const initialScale = useTransform(scrollYProgress, [0.195, 0.34], [0.7, 1.0]);
+  const initialScale = useTransform(
+    scrollYProgress,
+    [0.16, 0.34], // Align starting threshold with other animations
+    [0.7, 1.0],
+    { ease: smoothEasing }
+  );
 
   // Scale for inner content that starts at 34% when shadow fades
   const innerScale = useTransform(scrollYProgress, [0.34, 0.45], [1.0, 1.12]);
@@ -45,14 +56,16 @@ export const AlbumShowcase = ({
   // 3D perspective transform for the album cover - UPDATED to end at 0.34
   const coverRotateX = useTransform(
     scrollYProgress,
-    [0.165, 0.34],
-    ["5deg", "0deg"]
+    [0.16, 0.34], // Align with other animations
+    ["5deg", "0deg"],
+    { ease: smoothEasing }
   );
 
   const coverDepth = useTransform(
     scrollYProgress,
-    [0.18, 0.34],
-    ["-15px", "0px"]
+    [0.16, 0.34], // Align with other animations
+    ["-15px", "0px"],
+    { ease: smoothEasing }
   );
 
   // The spotify piece that will just have links - synchronized with inner image zoom
@@ -82,6 +95,9 @@ export const AlbumShowcase = ({
     [1, 0]
   );
 
+  // Extract the inline useTransform to component level
+  const glowOverlayOpacity = useTransform(scrollYProgress, [0, 0.165], [1, 0]);
+
   return (
     <div className="relative h-[350vh] w-full bg-black">
       <motion.div
@@ -94,7 +110,7 @@ export const AlbumShowcase = ({
         <motion.div
           className="absolute top-0 left-0 w-full h-full glow-overlay"
           style={{
-            opacity: useTransform(scrollYProgress, [0, 0.165], [1, 0]),
+            opacity: glowOverlayOpacity,
           }}
         ></motion.div>
 
