@@ -317,8 +317,8 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
                     phrase={phrase}
                     index={index}
                     scrollYProgress={scrollYProgress}
-                    start={0.75}
-                    end={0.78}
+                    start={0.72}
+                    end={0.75}
                   />
                 ))}
               </div>
@@ -339,7 +339,7 @@ const ProjectSection = forwardRef<HTMLDivElement, ProjectSectionProps>(
             </div>
 
             {/* Song Items */}
-            <div className="mt-12 md:mt-24">
+            <div className="mt-6 md:mt-10">
               <SongItem
                 title="Complacent Lust"
                 className="py-3 md:py-4 relative"

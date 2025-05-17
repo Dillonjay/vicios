@@ -26,32 +26,32 @@ export const AlbumShowcase = ({
   // Single panel animation (expands from the middle to cover the screen)
   const panelWidth = useTransform(
     scrollYProgress,
-    [0.165, 0.34],
+    [0.1455, 0.34],
     ["0%", "100%"]
   );
 
   const underneathOpacity = useTransform(
     scrollYProgress,
-    [0.195, 0.34],
+    [0.191, 0.34],
     [0, 1]
   );
 
   // Initial scale for the container (stops at 34%)
-  const initialScale = useTransform(scrollYProgress, [0.195, 0.34], [0.7, 1.3]);
+  const initialScale = useTransform(scrollYProgress, [0.195, 0.34], [0.7, 1.0]);
 
   // Scale for inner content that starts at 34% when shadow fades
-  const innerScale = useTransform(scrollYProgress, [0.34, 0.45], [1, 1.12]);
+  const innerScale = useTransform(scrollYProgress, [0.34, 0.45], [1.0, 1.12]);
 
-  // 3D perspective transform for the album cover
+  // 3D perspective transform for the album cover - UPDATED to end at 0.34
   const coverRotateX = useTransform(
     scrollYProgress,
-    [0.165, 0.245],
+    [0.165, 0.34],
     ["5deg", "0deg"]
   );
 
   const coverDepth = useTransform(
     scrollYProgress,
-    [0.18, 0.245],
+    [0.18, 0.34],
     ["-15px", "0px"]
   );
 
@@ -121,6 +121,7 @@ export const AlbumShowcase = ({
               rgba(30,30, 30, 1) 0%,
               rgba(0, 0, 0, 1) 80%
             )`,
+            transformOrigin: "center center",
           }}
         >
           {/* Album Cover with Subtle Inset Effect - Container */}

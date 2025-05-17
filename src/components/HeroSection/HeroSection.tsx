@@ -17,11 +17,11 @@ export const HeroSection = ({ scrollYProgress, homeRef }: HeroSectionProps) => {
       className="w-full h-[150vh] relative bg-black"
     >
       <motion.div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center px-4">
-        <motion.h1 className="text-5xl md:text-7xl lg:text-9xl font-black text-white z-20 text-center">
+        <motion.h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white z-20 text-center">
           VICIOS
         </motion.h1>
         <motion.h2
-          className="text-4xl md:text-5xl lg:text-7xl font-black text-white text-center"
+          className="text-3xl md:text-5xl lg:text-6xl font-black text-white text-center"
           style={{
             opacity: ocultosOpacity,
           }}
