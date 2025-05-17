@@ -7,9 +7,14 @@ import {
   FaEnvelope,
 } from "react-icons/fa6";
 import { useState, useEffect, forwardRef } from "react";
-import { messages } from "./connectMessages";
+import { messages } from "../config/connectMessages";
 import { FormattedMessage } from "react-intl";
-import { SPOTIFY_URL, INSTAGRAM, YOUTUBE, APPLE_MUSIC } from "./constants";
+import {
+  SPOTIFY_URL,
+  INSTAGRAM,
+  YOUTUBE,
+  APPLE_MUSIC,
+} from "../config/constants";
 
 // Custom hook to track mouse position
 const useMousePosition = () => {

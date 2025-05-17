@@ -7,6 +7,11 @@
     "dev": "vite",
     "build": "rm -rf dist && tsc -b && vite build",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
+    "prettier": "prettier --check 'src/**/*.{ts,tsx}'",
+    "prettier:fix": "prettier --write 'src/**/*.{ts,tsx}'",
+    "verify": "npm run typecheck && npm run lint && npm run prettier",
     "preview": "vite preview"
   },
   "dependencies": {

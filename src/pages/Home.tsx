@@ -1,13 +1,13 @@
 import { useRef } from "react";
 import { motion, useScroll, useInView } from "framer-motion";
-import { Navigation } from "./components/Navigation/Navigation";
-import AboutSection from "./About";
-import ProjectSection from "./Project";
-import ContactSection from "./Connect";
-import { HeroSection } from "./components/HeroSection";
-import { AlbumShowcase } from "./components/AlbumShowcase";
+import { Navigation } from "../components/Navigation/Navigation";
+import AboutSection from "../sections/About";
+import ProjectSection from "../sections/Project";
+import ContactSection from "../sections/Connect";
+import { HeroSection } from "../components/HeroSection";
+import { AlbumShowcase } from "../components/AlbumShowcase";
 
-import complacentCover from "/assets/complacent-lust-cover.jpeg";
+import complacentCover from "/images/complacent-lust-cover.jpeg";
 
 const Home = () => {
   const { scrollYProgress } = useScroll();

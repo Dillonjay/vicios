@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useCallback, useState, useMemo } from "react";
 import classNames from "classnames";
-import { Languages } from "../../types.ts";
+import { Languages } from "../../types";
 
 const TOGGLE_INITIAL_STYLE = {
   width: "4rem",

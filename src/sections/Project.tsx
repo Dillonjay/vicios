@@ -1,16 +1,16 @@
 import { forwardRef, useState, useRef, useEffect } from "react";
 import { motion, useTransform, MotionValue } from "framer-motion";
-import viciosCierto from "/assets/cierto-cover.jpeg";
-import viciosBack from "/assets/vicios-back-cover.png";
-import viciosComplacent from "/assets/complacent-lust-cover.jpeg";
-import { MusicButton } from "./MusicButton";
+import viciosCierto from "/images/cierto-cover.jpeg";
+import viciosBack from "/images/vicios-back-cover.png";
+import viciosComplacent from "/images/complacent-lust-cover.jpeg";
+import { MusicButton } from "../components/MusicButton";
 import { ImSpinner3 } from "react-icons/im";
 import { FaApple, FaSpotify, FaYoutube } from "react-icons/fa6";
 import { FormattedMessage } from "react-intl";
-import { messages } from "./projectMessages";
-import { SPOTIFY, YOUTUBE, APPLE_MUSIC } from "./constants";
-import { SongItem } from "./components/SongItem/SongItem";
-import { StickySection } from "./components/StickySection";
+import { messages } from "../config/projectMessages";
+import { SPOTIFY, YOUTUBE, APPLE_MUSIC } from "../config/constants";
+import { SongItem } from "../components/SongItem/SongItem";
+import { StickySection } from "../components/StickySection";
 
 interface FallingTextProps {
   phrase: string;

@@ -1,7 +1,7 @@
 import { motion, MotionValue, useTransform } from "framer-motion";
 import { FaApple, FaYoutube, FaSpotify } from "react-icons/fa6";
-import { MusicButton } from "../../MusicButton";
-import { SPOTIFY, YOUTUBE, APPLE_MUSIC } from "../../constants";
+import { MusicButton } from "../MusicButton";
+import { SPOTIFY, YOUTUBE, APPLE_MUSIC } from "../../config/constants";
 
 // Import easing functions from framer-motion
 import { cubicBezier } from "framer-motion";
@@ -101,7 +101,7 @@ export const AlbumShowcase = ({
   return (
     <div className="relative h-[350vh] w-full bg-black">
       <motion.div
-        className="sticky top-0 h-screen w-full flex justify-center bg-cover bg-no-repeat bg-[url('/assets/vicios-hero.jpeg')] bg-center"
+        className="sticky top-0 h-screen w-full flex justify-center bg-cover bg-no-repeat bg-[url('/images/vicios-hero.jpeg')] bg-center"
         style={{
           opacity: componentVisibility,
         }}

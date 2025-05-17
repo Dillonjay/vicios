@@ -1,5 +1,5 @@
 .mask {
-  mask-image: url("/assets/circle-mask.svg");
+  mask-image: url("/svgs/circle-mask.svg");
   mask-repeat: no-repeat;
   mask-size: 40px;
   background: white;
