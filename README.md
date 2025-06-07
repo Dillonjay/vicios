@@ -10,7 +10,7 @@ The project follows a well-organized structure for better maintainability:
 
 ```
 src/
-├── assets/        # Static assets like images, fonts, etc.
+├── assets/        # Static assets like images, fonts, etc. (if processed by build)
 ├── components/    # Reusable UI components
 ├── config/        # Configuration files, constants, and messages
 │   └── locales/   # Internationalization files
@@ -23,6 +23,13 @@ src/
 ├── types/         # TypeScript type definitions
 ├── utils/         # Utility functions
 └── main.tsx       # Application entry point
+
+public/
+├── images/        # Publicly served images
+├── svgs/          # Publicly served SVGs
+├── fonts/         # Publicly served fonts (if not processed via src/)
+└── manifest.json  # Web app manifest
+└── ... other static assets (favicon, etc.)
 ```
 
 ## Getting Started
