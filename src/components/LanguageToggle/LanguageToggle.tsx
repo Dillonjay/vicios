@@ -143,10 +143,10 @@ const LanguageToggle = ({ setLanguage, language }: LanguageToggleProps) => {
             !isHovered && language === Languages.ES
               ? "calc(100% - 64px)"
               : !isHovered && language === Languages.EN
-              ? 0
-              : language === "en"
-              ? 6
-              : "calc(100% - 55px)",
+                ? 0
+                : language === "en"
+                  ? 6
+                  : "calc(100% - 55px)",
           top: !isHovered ? 0 : "0.5rem",
           background: isHovered
             ? "linear-gradient(to bottom,#f3ec78, #af4261)"

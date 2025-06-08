@@ -216,10 +216,10 @@ export const SongItem = ({
                 i % 5 === 0
                   ? "#4f4f4f"
                   : i % 3 === 0
-                  ? "#6b6b6b"
-                  : i % 2 === 0
-                  ? "#888888"
-                  : "#3d3d3d",
+                    ? "#6b6b6b"
+                    : i % 2 === 0
+                      ? "#888888"
+                      : "#3d3d3d",
             }}
             initial={{ scaleY: 0.2 }}
             animate={barAnimate(i)}
