@@ -40,7 +40,7 @@ const TEXT_TRANSITION_DURATION = {
 };
 
 interface LanguageToggleProps {
-  setLanguage: React.Dispatch<React.SetStateAction<Languages>>;
+  setLanguage: (language: Languages) => void;
   language: Languages;
 }
 
@@ -55,10 +55,8 @@ const LanguageToggle = ({ setLanguage, language }: LanguageToggleProps) => {
   }, [setIsHovered]);
 
   const toggleLanguage = useCallback(() => {
-    setLanguage((prev) =>
-      prev === Languages.EN ? Languages.ES : Languages.EN
-    );
-  }, [setLanguage]);
+    setLanguage(language === Languages.EN ? Languages.ES : Languages.EN);
+  }, [setLanguage, language]);
 
   const toggleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLButtonElement>) => {
