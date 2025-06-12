@@ -103,14 +103,14 @@ const LanguageToggle = ({ setLanguage, language }: LanguageToggleProps) => {
     >
       {/* Background svg's and overlays */}
       <motion.div
-        className="absolute inset-0 bg-cover bg-[150%] aspect-w-16 aspect-h-9 bg-[url('/assets/mountain.svg')]"
+        className="absolute inset-0 bg-cover bg-[150%] aspect-w-16 aspect-h-9 bg-[url('/svgs/mountain.svg')]"
         animate={{ opacity: language === Languages.EN ? 1 : 0 }}
         transition={BG_TRANSITION_DURATION}
       >
         <div className={bgImageOverlayClass} />
       </motion.div>
       <motion.div
-        className="absolute inset-0 bg-cover bg-[150%] aspect-w-16 aspect-h-9 bg-[url('/assets/canyon.svg')]"
+        className="absolute inset-0 bg-cover bg-[150%] aspect-w-16 aspect-h-9 bg-[url('/svgs/canyon.svg')]"
         animate={{ opacity: language === Languages.ES ? 1 : 0 }}
         transition={BG_TRANSITION_DURATION}
       >
